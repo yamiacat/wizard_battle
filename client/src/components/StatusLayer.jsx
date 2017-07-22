@@ -10,14 +10,14 @@ class StatusLayer extends React.Component {
 
   render() {
 
-    if(!this.props.player || !this.props.playerLocation) {
+    if(!this.props.player || !this.props.playerLat) {
       var gameStatus = "Welcome Player";
       var welcome = <PlayerWelcome
         player={this.props.player}
         submitPlayerName={this.props.submitPlayerName}
         getPlayerName={this.props.getPlayerName}
       />
-    } else if (this.props.player && this.props.playerLocation) {
+    } else if (this.props.player && this.props.playerLat) {
       welcome = null;
       var gameStatus = `${this.props.player}`
     }
@@ -30,6 +30,8 @@ class StatusLayer extends React.Component {
           defaultCenter={this.props.defaultCenter}
           defaultZoom={this.props.defaultZoom}
           onMapClick={this.props.onMapClick}
+          playerLat={this.props.playerLat}
+          playerLng={this.props.playerLng}
           >
           ></MagicLayer>
       </div>

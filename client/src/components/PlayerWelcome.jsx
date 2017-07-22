@@ -8,20 +8,21 @@ class PlayerWelcome extends React.Component {
 
   render() {
 
-    if(!this.props.player) {var playerChoice =
-    <form id="player-form" onClick={this.props.submitPlayerName}>
-      <input  className="player-input"
-        id={this.props.player}
-        type="text"
-        onKeyUp={this.props.getPlayerName}
-        placeholder="Choose your wizarding name!">
-      </input>
-      <input type="submit" value="Submit"></input>
-    </form>
-  } else {
-    playerChoice = <h4 className="player-input">Click on the map to choose your start position</h4>
-  }
-
+    if(!this.props.player) {
+      var playerChoice =
+      <form id="player-form" onClick={this.props.submitPlayerName}>
+        <input  className="player-input"
+          id={this.props.player}
+          type="text"
+          onKeyUp={this.props.getPlayerName}
+          placeholder="Choose your wizarding name!">
+        </input>
+        <input type="submit" value="Submit"></input>
+      </form>
+    } else {
+      playerChoice = <h4 className="player-input">Click on the map to choose your start position</h4>
+    }
+    
 
     return(
       <div id="player-welcome">
