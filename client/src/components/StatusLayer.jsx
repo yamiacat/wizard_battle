@@ -1,6 +1,6 @@
 import React from 'react';
 import MagicLayer from './MagicLayer.jsx'
-import {PlayerWelcome} from './PlayerWelcome.jsx';
+import PlayerWelcome from './PlayerWelcome.jsx';
 
 class StatusLayer extends React.Component {
 
@@ -10,21 +10,17 @@ class StatusLayer extends React.Component {
 
   render() {
 
-    if(!this.props.player) {
+    if(!this.props.player || !this.props.playerLocation) {
       var gameStatus = "Welcome Player";
       var welcome = <PlayerWelcome
         player={this.props.player}
         submitPlayerName={this.props.submitPlayerName}
         getPlayerName={this.props.getPlayerName}
       />
-    } else if (this.props.player) {
+    } else if (this.props.player && this.props.playerLocation) {
       welcome = null;
       var gameStatus = `${this.props.player}`
     }
-    // else if(!this.props.player2) {
-    //   var gameStatus = "Welcome Player 2";
-    // }
-
 
     return(
       <div>

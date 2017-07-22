@@ -10,10 +10,12 @@ class GameContainer extends React.Component {
       defaultCenter: {lat: 59.95, lng: 30.33},
       defaultZoom: 1,
       player: null,
+      playerLocation: null,
       tempName: null,
     }
     this.getPlayerName = this.getPlayerName.bind(this);
     this.submitPlayerName = this.submitPlayerName.bind(this);
+    this.onMapClick = this.onMapClick.bind(this);
   }
 
 
@@ -24,6 +26,16 @@ class GameContainer extends React.Component {
     console.log("onMapClick obj.lat", obj.lat);
     console.log("onMapClick obj.lng", obj.lng);
     console.log("onMapClick obj.event", obj.event);
+
+    if(!this.state.playerLocation) {
+      this.setState({
+        playerLocation: {
+          lat: obj.lat,
+          lng: obj.lng
+        }
+      })
+    }
+
   }
 
   submitPlayerName(event) {
@@ -54,6 +66,7 @@ class GameContainer extends React.Component {
           defaultZoom={this.state.defaultZoom}
           onMapClick={this.onMapClick}
           player={this.state.player}
+          playerLocation={this.state.playerLocation}
           submitPlayerName={this.submitPlayerName}
           getPlayerName={this.getPlayerName}
           >

@@ -1,15 +1,36 @@
 import React from 'react';
 
-export const PlayerWelcome = (props) => (
+class PlayerWelcome extends React.Component {
 
+  constructor(props) {
+    super(props);
+  }
 
-  <div id="player-welcome">
-    Welcome {props.player}!
-    <form id="player-form" onClick={props.submitPlayerName}>
-      <input className="player-input" id={props.player} key={props.player} type="text" onKeyUp={props.getPlayerName} placeholder="Choose your wizarding name!"></input>
+  render() {
+
+    if(!this.props.player) {var playerChoice =
+    <form id="player-form" onClick={this.props.submitPlayerName}>
+      <input  className="player-input"
+        id={this.props.player}
+        type="text"
+        onKeyUp={this.props.getPlayerName}
+        placeholder="Choose your wizarding name!">
+      </input>
       <input type="submit" value="Submit"></input>
     </form>
+  } else {
+    playerChoice = <h4 className="player-input">Click on the map to choose your start position</h4>
+  }
 
 
-  </div>
-)
+    return(
+      <div id="player-welcome">
+        Welcome {this.props.player}!
+        {playerChoice}
+
+      </div>
+    )
+  }
+}
+
+export default PlayerWelcome;

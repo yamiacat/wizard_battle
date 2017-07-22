@@ -10,7 +10,7 @@
   margin: 20% 5%;
   padding: 20px;
   border: 1px solid #888;
-  width: 80%;
+  width: inherit;
 }
 
 #player-form {
@@ -20,5 +20,5 @@
 }
 
 .player-input {
-  width: 200px;
+  width: 200px;  
 }
