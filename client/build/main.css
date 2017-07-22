@@ -1,4 +1,24 @@
 #magic-layer {
-  width: 600px;
-  height: 400px;
+  width: 1000px;
+  height: 500px;
+}
+
+#player-welcome {
+  z-index: 10;
+  background-color: tomato;
+  position: fixed;
+  margin: 20% 5%;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+}
+
+#player-form {
+  display: inline-block;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.player-input {
+  width: 200px;
 }

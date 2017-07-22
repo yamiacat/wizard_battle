@@ -13,6 +13,7 @@ class MagicLayer extends React.Component {
         <GoogleMapReact
           defaultCenter={this.props.defaultCenter}
           defaultZoom={this.props.defaultZoom}
+          onClick={this.props.onMapClick}
           >
           </GoogleMapReact>
         <h3>I am Magic Layer</h3>
