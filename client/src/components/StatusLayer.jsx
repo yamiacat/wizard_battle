@@ -24,7 +24,7 @@ class StatusLayer extends React.Component {
     }
 
     return(
-      <div>
+      <div id="status-layer">
         <h2>{gameStatus}</h2>
         {activeComponent}
         <MagicLayer
@@ -34,6 +34,7 @@ class StatusLayer extends React.Component {
           onMapClick={this.props.onMapClick}
           playerLat={this.props.playerLat}
           playerLng={this.props.playerLng}
+          submitOrb={this.props.submitOrb}
           >
           ></MagicLayer>
       </div>

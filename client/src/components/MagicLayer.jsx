@@ -1,6 +1,7 @@
 import React from 'react';
 import GoogleMapReact from 'google-map-react';
 import {PlayerIcon} from './PlayerIcon.jsx';
+import OrbCast from './OrbCast.jsx';
 
 class MagicLayer extends React.Component {
 
@@ -24,11 +25,15 @@ class MagicLayer extends React.Component {
 
 
     if(!this.props.playerLat) {
-      var playerIcon = null
+      var playerIcon = null;
+      var spellButton = null;
     } else {
       var playerIcon = <PlayerIcon
         lat={this.props.playerLat}
         lng={this.props.playerLng}
+      />
+      var spellButton = <OrbCast 
+      submitOrb={this.props.submitOrb}
       />
     }
 
@@ -44,6 +49,7 @@ class MagicLayer extends React.Component {
           >
             {playerIcon}
           </GoogleMapReact>
+            {spellButton}
         <h3>I am Magic Layer</h3>
       </div>
     )

@@ -1,15 +1,19 @@
+#status-layer {
+  position: absolute;
+  width: inherit;
+}
+
 #magic-layer {
   width: 1000px;
   height: 500px;
   position: absolute;
-
 }
 
 #player-welcome {
   z-index: 10;
   background-color: tomato;
   position: absolute;
-  bottom: 350px;
+  top: 250px;
   left: 20px;
   padding: 20px;
   border: 1px solid #888;
@@ -17,6 +21,7 @@
 
 #player-form {
   display: inline-block;
+  width: 370px;
   margin-left: 20px;
   margin-right: 20px;
 }
@@ -38,9 +43,9 @@
   width: 490px;
   height: 490px;
   left: 250px;
+  top: 70px;
   border-radius: 50%;
   border: 3px solid tomato;
   z-index: 10;
   pointer-events: none;
-
 }
