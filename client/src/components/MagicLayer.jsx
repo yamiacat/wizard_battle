@@ -37,6 +37,7 @@ class MagicLayer extends React.Component {
         <GoogleMapReact
           defaultCenter={this.props.defaultCenter}
           defaultZoom={this.props.defaultZoom}
+          onChange={this.props.onMapChange}
           options={this.createMapOptions}
           onClick={this.props.onMapClick}
           playerLat={this.props.playerLat}

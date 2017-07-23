@@ -29,6 +29,7 @@ class StatusLayer extends React.Component {
         <MagicLayer
           defaultCenter={this.props.defaultCenter}
           defaultZoom={this.props.defaultZoom}
+          onMapChange={this.props.onMapChange}
           onMapClick={this.props.onMapClick}
           playerLat={this.props.playerLat}
           playerLng={this.props.playerLng}

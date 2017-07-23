@@ -9,6 +9,7 @@ class GameContainer extends React.Component {
     this.state = {
       defaultCenter: {lat: 59.95, lng: 30.33},
       defaultZoom: 3,
+      currentZoom: 3,
       player: null,
       playerLat: null,
       playerLng: null,
@@ -17,6 +18,7 @@ class GameContainer extends React.Component {
     this.getPlayerName = this.getPlayerName.bind(this);
     this.submitPlayerName = this.submitPlayerName.bind(this);
     this.onMapClick = this.onMapClick.bind(this);
+    // this.getZoom = this.getZoom.bind(this);
   }
 
 
@@ -26,7 +28,7 @@ class GameContainer extends React.Component {
     console.log("onMapClick obj.y", obj.y);
     console.log("onMapClick obj.lat", obj.lat);
     console.log("onMapClick obj.lng", obj.lng);
-    console.log("onMapClick obj.event", obj.event);
+    // console.log("onMapClick obj.event", obj.event);
 
     if(!this.state.playerLat && this.state.player) {
       this.setState({
@@ -34,7 +36,13 @@ class GameContainer extends React.Component {
         playerLng: obj.lng
       })
     }
+  }
 
+  onMapChange(obj) {
+    console.log("Map center", obj.center);
+    console.log("Zoom", obj.zoom);
+    console.log("bounds", obj.bounds.sw);
+    console.log("marginBounds", obj.marginBounds.nw);
   }
 
   submitPlayerName(event) {
@@ -61,6 +69,7 @@ class GameContainer extends React.Component {
         <StatusLayer
           defaultCenter={this.state.defaultCenter}
           defaultZoom={this.state.defaultZoom}
+          onMapChange={this.onMapChange}
           onMapClick={this.onMapClick}
           player={this.state.player}
           playerLat={this.state.playerLat}
