@@ -8,7 +8,20 @@ class MagicLayer extends React.Component {
     super(props);
   }
 
+
+  createMapOptions(maps) {
+    var mapOptions = {
+      scaleControl: true,
+      scrollwheel:  false,
+      clickableIcons: false,
+      maxZoom: 16,
+    }
+    return mapOptions
+  }
+
+
   render() {
+
 
     if(!this.props.playerLat) {
       var playerIcon = null
@@ -24,6 +37,7 @@ class MagicLayer extends React.Component {
         <GoogleMapReact
           defaultCenter={this.props.defaultCenter}
           defaultZoom={this.props.defaultZoom}
+          options={this.createMapOptions}
           onClick={this.props.onMapClick}
           playerLat={this.props.playerLat}
           >

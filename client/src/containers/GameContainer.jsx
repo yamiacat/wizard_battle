@@ -8,7 +8,7 @@ class GameContainer extends React.Component {
 
     this.state = {
       defaultCenter: {lat: 59.95, lng: 30.33},
-      defaultZoom: 1,
+      defaultZoom: 3,
       player: null,
       playerLat: null,
       playerLng: null,
