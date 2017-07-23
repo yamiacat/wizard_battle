@@ -1,16 +1,18 @@
 #magic-layer {
   width: 1000px;
   height: 500px;
+  position: absolute;
+
 }
 
 #player-welcome {
   z-index: 10;
   background-color: tomato;
-  position: fixed;
-  margin: 20% 5%;
+  position: absolute;
+  bottom: 350px;
+  left: 20px;
   padding: 20px;
   border: 1px solid #888;
-  width: inherit;
 }
 
 #player-form {
@@ -29,8 +31,16 @@
   height: 75px;
   left: -25px;
   top: -75px;
-  /*max-width: 100px;
-  max-height: 100px;*/
-  /*padding-top: 20px;
-  margin-top: -20px;*/
+}
+
+#orb-spell {
+  position: absolute;
+  width: 490px;
+  height: 490px;
+  left: 250px;
+  border-radius: 50%;
+  border: 3px solid tomato;
+  z-index: 10;
+  pointer-events: none;
+
 }

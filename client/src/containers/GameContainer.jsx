@@ -18,7 +18,6 @@ class GameContainer extends React.Component {
     this.getPlayerName = this.getPlayerName.bind(this);
     this.submitPlayerName = this.submitPlayerName.bind(this);
     this.onMapClick = this.onMapClick.bind(this);
-    // this.getZoom = this.getZoom.bind(this);
   }
 
 
