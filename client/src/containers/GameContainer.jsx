@@ -16,6 +16,7 @@ class GameContainer extends React.Component {
       playerLat: null,
       playerLng: null,
       tempName: null,
+      scry: false
     }
     this.getPlayerName = this.getPlayerName.bind(this);
     this.submitPlayerName = this.submitPlayerName.bind(this);
@@ -24,6 +25,7 @@ class GameContainer extends React.Component {
     this.submitOrb = this.submitOrb.bind(this);
     this.placePlayer = this.placePlayer.bind(this);
     this.checkPanorama = this.checkPanorama.bind(this);
+    this.submitScry = this.submitScry.bind(this);
   }
 
   checkPanorama(data, status) {
@@ -35,8 +37,6 @@ class GameContainer extends React.Component {
         playerLat: data.location.latLng.lat(),
         playerLng: data.location.latLng.lng()
       })
-    } else {
-      console.log("checkPanorama NO-K!");
     }
   }
 
@@ -52,10 +52,8 @@ class GameContainer extends React.Component {
   onMapClick(obj) {
     // console.log("onMapClick obj.x", obj.x);
     // console.log("onMapClick obj.y", obj.y);
-    console.log("onMapClick obj.lat", obj.lat);
-    console.log("playerLat", this.state.playerLat);
-    console.log("onMapClick obj.lng", obj.lng);
-    console.log("playerLng", this.state.playerLng);
+    // console.log("onMapClick obj.lat", obj.lat);
+    // console.log("onMapClick obj.lng", obj.lng);
     // console.log("onMapClick obj.event", obj.event);
 
     if(!this.state.playerLat && this.state.player) {
@@ -183,6 +181,25 @@ class GameContainer extends React.Component {
     }
   }
 
+  submitScry(event) {
+    event.preventDefault();
+    console.log("submitScry clicked");
+    var currentScryStatus = this.state.scry;
+    // var panoramaDiv = document.getElementById("scry-panorama");
+
+    if(!currentScryStatus) {
+      this.setState({scry: true})
+
+
+
+      // panoramaDiv.style.display = "block";
+
+    } else {
+      this.setState({scry: false})
+      // panoramaDiv.style.display = "none";
+
+    }
+  }
 
   render() {
     return(
@@ -199,6 +216,8 @@ class GameContainer extends React.Component {
           submitPlayerName={this.submitPlayerName}
           getPlayerName={this.getPlayerName}
           submitOrb={this.submitOrb}
+          submitScry={this.submitScry}
+          scryStatus={this.state.scry}
         />
       </div>
     )

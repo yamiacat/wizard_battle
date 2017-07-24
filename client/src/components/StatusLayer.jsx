@@ -18,8 +18,10 @@ class StatusLayer extends React.Component {
         submitPlayerName={this.props.submitPlayerName}
         getPlayerName={this.props.getPlayerName}
       />
-    } else if (this.props.player && this.props.playerLat) {
+    } else if (this.props.player && this.props.playerLat && !this.props.scryStatus) {
       activeComponent = <OrbSpell/>;
+      var gameStatus = `${this.props.player}`
+    } else {
       var gameStatus = `${this.props.player}`
     }
 
@@ -35,6 +37,8 @@ class StatusLayer extends React.Component {
           playerLat={this.props.playerLat}
           playerLng={this.props.playerLng}
           submitOrb={this.props.submitOrb}
+          submitScry={this.props.submitScry}
+          scryStatus={this.props.scryStatus}
           />
       </div>
     )

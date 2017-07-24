@@ -9,6 +9,10 @@
   position: absolute;
 }
 
+#magic-layer-wrapper {
+  position: absolute;
+}
+
 #player-welcome {
   z-index: 10;
   background-color: tomato;
@@ -51,5 +55,23 @@
 }
 
 #orb-cast {
-  text-align: center;
+  position: absolute;
+  left: 500px;
+}
+
+#scry-cast {
+  position: absolute;
+  left: 700px;
+}
+
+#scry-panorama {
+  height: inherit;
+  width: inherit;
+  position: absolute;
+  /*display: none;*/
+}
+
+#spell-buttons {
+  position: absolute;
+  top: 500px;
 }
