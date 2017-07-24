@@ -30,7 +30,11 @@ class MagicLayer extends React.Component {
     if(!this.props.playerLat) {
       var playerIcon = null;
       var spellButton = null;
+      var center = this.props.defaultCenter;
+      var zoom = this.props.defaultZoom;
     } else {
+      var center = {lat: this.props.centerLat, lng: this.props.centerLng};
+      var zoom = this.props.currentZoom;
       var playerIcon = <PlayerIcon
         lat={this.props.playerLat}
         lng={this.props.playerLng}
@@ -53,8 +57,8 @@ class MagicLayer extends React.Component {
         bootstrapURLKeys={{
           key: apiKey
         }}
-        defaultCenter={this.props.defaultCenter}
-        defaultZoom={this.props.defaultZoom}
+        defaultCenter={center}
+        defaultZoom={zoom}
         onChange={this.props.onMapChange}
         options={this.createMapOptions}
         onClick={this.props.onMapClick}

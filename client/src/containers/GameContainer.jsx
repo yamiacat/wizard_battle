@@ -218,6 +218,9 @@ class GameContainer extends React.Component {
           submitOrb={this.submitOrb}
           submitScry={this.submitScry}
           scryStatus={this.state.scry}
+          currentZoom={this.state.currentZoom}
+          centerLat={this.state.centerLat}
+          centerLng={this.state.centerLng}
         />
       </div>
     )

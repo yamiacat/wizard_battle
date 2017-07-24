@@ -39,6 +39,9 @@ class StatusLayer extends React.Component {
           submitOrb={this.props.submitOrb}
           submitScry={this.props.submitScry}
           scryStatus={this.props.scryStatus}
+          currentZoom={this.props.currentZoom}
+          centerLat={this.props.centerLat}
+          centerLng={this.props.centerLng}
           />
       </div>
     )
