@@ -22,22 +22,46 @@ class GameContainer extends React.Component {
     this.onMapClick = this.onMapClick.bind(this);
     this.onMapChange = this.onMapChange.bind(this);
     this.submitOrb = this.submitOrb.bind(this);
+    this.placePlayer = this.placePlayer.bind(this);
+    this.checkPanorama = this.checkPanorama.bind(this);
   }
 
+  checkPanorama(data, status) {
+    if(status == 'OK') {
 
+      console.log("checkPanorama OK!");
+
+      this.setState({
+        playerLat: data.location.latLng.lat(),
+        playerLng: data.location.latLng.lng()
+      })
+    } else {
+      console.log("checkPanorama NO-K!");
+    }
+  }
+
+  placePlayer(obj, radius) {
+    var streetView = new google.maps.StreetViewService();
+    streetView.getPanorama({
+      location: new google.maps.LatLng(obj.lat, obj.lng),
+      radius: radius
+    }, this.checkPanorama);
+
+  }
 
   onMapClick(obj) {
     // console.log("onMapClick obj.x", obj.x);
     // console.log("onMapClick obj.y", obj.y);
-    // console.log("onMapClick obj.lat", obj.lat);
-    // console.log("onMapClick obj.lng", obj.lng);
+    console.log("onMapClick obj.lat", obj.lat);
+    console.log("playerLat", this.state.playerLat);
+    console.log("onMapClick obj.lng", obj.lng);
+    console.log("playerLng", this.state.playerLng);
     // console.log("onMapClick obj.event", obj.event);
 
     if(!this.state.playerLat && this.state.player) {
-      this.setState({
-        playerLat: obj.lat,
-        playerLng: obj.lng
-      })
+      this.placePlayer(obj, 500000);
+      this.placePlayer(obj, 5000);
+      this.placePlayer(obj, 50);
     }
   }
 
@@ -157,7 +181,6 @@ class GameContainer extends React.Component {
     if(range <= spellRange) {
       console.log("Hit! For:", damage);
     }
-
   }
 
 
@@ -176,8 +199,7 @@ class GameContainer extends React.Component {
           submitPlayerName={this.submitPlayerName}
           getPlayerName={this.getPlayerName}
           submitOrb={this.submitOrb}
-          >
-          </StatusLayer>
+        />
       </div>
     )
   }

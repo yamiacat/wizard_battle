@@ -35,8 +35,7 @@ class StatusLayer extends React.Component {
           playerLat={this.props.playerLat}
           playerLng={this.props.playerLng}
           submitOrb={this.props.submitOrb}
-          >
-          ></MagicLayer>
+          />
       </div>
     )
   }

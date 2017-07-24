@@ -1,7 +1,7 @@
 import React from 'react';
 import GoogleMapReact from 'google-map-react';
 import {PlayerIcon} from './PlayerIcon.jsx';
-import OrbCast from './OrbCast.jsx';
+import {OrbCast} from './OrbCast.jsx';
 
 class MagicLayer extends React.Component {
 
@@ -32,8 +32,8 @@ class MagicLayer extends React.Component {
         lat={this.props.playerLat}
         lng={this.props.playerLng}
       />
-      var spellButton = <OrbCast 
-      submitOrb={this.props.submitOrb}
+      var spellButton = <OrbCast
+        submitOrb={this.props.submitOrb}
       />
     }
 
