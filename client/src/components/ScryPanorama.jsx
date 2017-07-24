@@ -17,6 +17,7 @@ return(
       apiKey={apiKey}
       streetViewPanoramaOptions={streetViewPanoramaOptions}
     />
+    <div id="clue-mask"></div>
   </div>
 )
 

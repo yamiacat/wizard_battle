@@ -75,3 +75,13 @@
   position: absolute;
   top: 500px;
 }
+
+#clue-mask {
+  position: absolute;
+  left: 700px;
+  bottom: 0px;
+  height: 14px;
+  width: 300px;
+  background-color: tomato;
+  z-index: 10;
+}

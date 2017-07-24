@@ -70,7 +70,7 @@ class MagicLayer extends React.Component {
       var mainPanel = <ScryPanorama
         playerLat={this.props.playerLat}
         playerLng={this.props.playerLng}
-      />
+      ></ScryPanorama>
 
 
 
