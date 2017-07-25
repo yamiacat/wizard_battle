@@ -19,7 +19,9 @@ class StatusLayer extends React.Component {
         getPlayerName={this.props.getPlayerName}
       />
     } else if (this.props.player && this.props.playerLat && !this.props.scryStatus) {
-      activeComponent = <OrbSpell/>;
+      activeComponent = <OrbSpell
+        chargeAnimation={this.props.chargeAnimation}
+      />;
       var gameStatus = `${this.props.player}, you have ${this.props.health} health`
     } else {
       var gameStatus = `${this.props.player}, you have ${this.props.health} health`
@@ -30,7 +32,9 @@ class StatusLayer extends React.Component {
         <div id="game-status">
           <h2>{gameStatus}</h2>
           <div id="game-messages">
-            {this.props.gameMessage}
+            <p>{this.props.magicMessage}</p>
+            <p>{this.props.gameMessage}</p>
+            <p>{this.props.attackMessage}</p>
           </div>
         </div>
         {activeComponent}

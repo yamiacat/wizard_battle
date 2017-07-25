@@ -22,7 +22,11 @@ class GameContainer extends React.Component {
       scryedLat: null,
       scryedLng: null,
       scryedPlayer: null,
-      gameMessage: null
+      gameMessage: null,
+      magicMessage: null,
+      attackMessage: null,
+      timedOut: false,
+      chargeAnimation: {animationPlayState: 'paused'}
     }
 
     this.socket = io();
@@ -48,12 +52,28 @@ class GameContainer extends React.Component {
   submitOrb(event) {
     event.preventDefault();
 
-    let attackDetails = {
-      attackingPlayer: this.state.player,
-      attackZoom: this.state.currentZoom,
-      attackCenter: {attackLat: this.state.centerLat, attackLng: this.state.centerLng}
+    if(this.state.timedOut === false) {
+      this.setState({
+        timedOut: true,
+        magicMessage: `Magic charging...`,
+        chargeAnimation: {animationPlayState: 'running'}
+      })
+
+      window.setTimeout(() => {this.setState({
+        timedOut: false,
+        magicMessage: `Magic ready...`,
+        chargeAnimation: {animationPlayState: 'paused'}
+        })}, 3000);
+
+      let attackDetails = {
+        attackingPlayer: this.state.player,
+        attackZoom: this.state.currentZoom,
+        attackCenter: {attackLat: this.state.centerLat, attackLng: this.state.centerLng}
+      }
+      this.socket.emit('attack', attackDetails);
+    } else {
+      this.setState({magicMessage: `Magic is recharging!`})
     }
-    this.socket.emit('attack', attackDetails);
   }
 
   receiveAttack(attackDetails) {
@@ -168,13 +188,13 @@ class GameContainer extends React.Component {
   receiveBroadcast(broadcastDetails) {
     if(broadcastDetails.hitPlayer !== this.state.player) {
       if(broadcastDetails.miss == true && broadcastDetails.attackingPlayer == this.state.player) {
-        this.setState({gameMessage: `Your spell has no effect...`});
+        this.setState({attackMessage: `Your spell has no effect...`});
       } else if(broadcastDetails.fatality == true && broadcastDetails.attackingPlayer == this.state.player) {
-        this.setState({gameMessage: `You killed ${broadcastDetails.hitPlayer}!`});
+        this.setState({attackMessage: `You killed ${broadcastDetails.hitPlayer}!`});
       } else if (broadcastDetails.fatality == true && broadcastDetails.attackingPlayer != this.state.player) {
         this.setState({gameMessage: `${broadcastDetails.attackingPlayer} killed ${broadcastDetails.hitPlayer}!`});
       } else if (broadcastDetails.attackingPlayer == this.state.player) {
-        this.setState({gameMessage: `You hexed ${broadcastDetails.hitPlayer} for ${broadcastDetails.damage} damage!`});
+        this.setState({attackMessage: `You hexed ${broadcastDetails.hitPlayer} for ${broadcastDetails.damage} damage!`});
 
       }
     }
@@ -262,7 +282,8 @@ class GameContainer extends React.Component {
     if(status == 'OK') {
       this.setState({
         playerLat: data.location.latLng.lat(),
-        playerLng: data.location.latLng.lng()
+        playerLng: data.location.latLng.lng(),
+        magicMessage: `Magic ready...`
       })
     }
   }
@@ -317,6 +338,9 @@ class GameContainer extends React.Component {
           scryedLng={this.state.scryedLng}
           health={this.state.health}
           gameMessage={this.state.gameMessage}
+          magicMessage={this.state.magicMessage}
+          attackMessage={this.state.attackMessage}
+          chargeAnimation={this.state.chargeAnimation}
 
           onMapChange={this.onMapChange}
           onMapClick={this.onMapClick}
