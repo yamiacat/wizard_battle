@@ -14,6 +14,7 @@ class GameContainer extends React.Component {
       centerLat: null,
       centerLng: null,
       player: null,
+      health: 1000,
       playerLat: null,
       playerLng: null,
       tempName: null,
@@ -22,6 +23,7 @@ class GameContainer extends React.Component {
 
     this.socket = io();
     this.socket.on('attack', this.receiveAttack.bind(this));
+    this.socket.on('broadcast', this.receiveBroadcast.bind(this));
 
     this.getPlayerName = this.getPlayerName.bind(this);
     this.submitPlayerName = this.submitPlayerName.bind(this);
@@ -31,31 +33,168 @@ class GameContainer extends React.Component {
     this.placePlayer = this.placePlayer.bind(this);
     this.checkPanorama = this.checkPanorama.bind(this);
     this.submitScry = this.submitScry.bind(this);
+    this.sufferDamage = this.sufferDamage.bind(this);
+  }
+
+//SOCKET FUNCTIONS
+
+  submitOrb(event) {
+    event.preventDefault();
+
+    let attackDetails = {
+      attackingPlayer: this.state.player,
+      attackZoom: this.state.currentZoom,
+      attackCenter: {attackLat: this.state.centerLat, attackLng: this.state.centerLng}
+    }
+    this.socket.emit('attack', attackDetails);
   }
 
   receiveAttack(attackDetails) {
-    console.log("attack received!", attackDetails);
-  }
 
-  checkPanorama(data, status) {
-    if(status == 'OK') {
+    if(attackDetails.attackingPlayer !== this.state.player) {
 
-      console.log("checkPanorama OK!");
+      const range = this.getDistanceFromLatLngInKm(this.state.playerLat, this.state.playerLng, attackDetails.attackCenter.attackLat, attackDetails.attackCenter.attackLng)
 
-      this.setState({
-        playerLat: data.location.latLng.lat(),
-        playerLng: data.location.latLng.lng()
-      })
+      console.log("Range", range);
+
+      let spellRange = 0;
+      let damage = 0;
+
+      switch(attackDetails.attackZoom) {
+        case 3:
+          spellRange = 2516;
+          damage = 1;
+          break;
+        case 4:
+          spellRange = 1385;
+          damage = 2;
+          break;
+        case 5:
+          spellRange = 727.25;
+          damage = 4;
+          break;
+        case 6:
+          spellRange = 371.25;
+          damage = 8;
+          break;
+        case 7:
+          spellRange = 188;
+          damage = 16;
+          break;
+        case 8:
+          spellRange = 94.5;
+          damage = 32;
+          break;
+        case 9:
+          spellRange = 47.5;
+          damage = 64;
+          break;
+        case 10:
+          spellRange = 23.75;
+          damage = 128;
+          break;
+        case 11:
+          spellRange = 12;
+          damage = 256;
+          break;
+        case 12:
+          spellRange = 6;
+          damage = 512;
+          break;
+        case 13:
+          spellRange = 3;
+          damage = 1024;
+          break;
+        case 14:
+          spellRange = 1.5;
+          damage = 2048;
+          break;
+        case 15:
+          spellRange = 0.75;
+          damage = 4096;
+          break;
+        case 16:
+          spellRange = 0.37;
+          damage = 8192;
+          break;
+        default:
+        console.log("Nuthin");
+      }
+
+      if(range <= spellRange) {
+        this.sufferDamage(damage, attackDetails.attackingPlayer)
+        console.log("Hit! For:", damage);
+      }
     }
   }
 
-  placePlayer(obj, radius) {
-    var streetView = new google.maps.StreetViewService();
-    streetView.getPanorama({
-      location: new google.maps.LatLng(obj.lat, obj.lng),
-      radius: radius
-    }, this.checkPanorama);
+  sufferDamage(damage, attackingPlayer) {
+    let currentHealth = this.state.health;
+    console.log("currentHealth", currentHealth);
 
+    let updatedHealth = currentHealth - damage;
+    console.log("updatedHealth", updatedHealth);
+    this.setState({health: updatedHealth});
+
+
+    let fatality = false;
+
+    if(updatedHealth < 1) {
+      fatality = true;
+      }
+    let broadcastDetails = {
+      attackingPlayer: attackingPlayer,
+      hitPlayer: this.state.player,
+      damage: damage,
+      fatality: fatality
+    }
+    this.socket.emit('broadcast', broadcastDetails);
+    console.log("broadcastDetails", broadcastDetails);
+  }
+
+
+  receiveBroadcast(broadcastDetails) {
+    if(broadcastDetails.fatality == true && broadcastDetails.attackingPlayer == this.state.player) {
+      console.log("You killed ", broadcastDetails.hitPlayer);
+    } else if (broadcastDetails.fatality == true && broadcastDetails.attackingPlayer != this.state.player) {
+      console.log("Someone killed ", broadcastDetails.hitPlayer);
+    } else if (broadcastDetails.attackingPlayer == this.state.player) {
+      console.log("You hit", broadcastDetails.hitPlayer + " for " + broadcastDetails.damage);
+    }
+  }
+
+
+
+  submitScry(event) {
+    event.preventDefault();
+    console.log("submitScry clicked");
+    var currentScryStatus = this.state.scry;
+    if(!currentScryStatus) {
+      this.setState({scry: true})
+    } else {
+      this.setState({scry: false})
+    }
+  }
+
+
+
+
+
+//PLAYER SETUP FUNCTIONS
+
+  submitPlayerName(event) {
+    event.preventDefault();
+
+      var newName = this.state.tempName;
+      this.setState({
+        player: newName
+      })
+  }
+
+  getPlayerName(event) {
+    this.setState({
+      tempName: event.target.value
+    })
   }
 
   onMapClick(obj) {
@@ -72,6 +211,25 @@ class GameContainer extends React.Component {
     }
   }
 
+  placePlayer(obj, radius) {
+    var streetView = new google.maps.StreetViewService();
+    streetView.getPanorama({
+      location: new google.maps.LatLng(obj.lat, obj.lng),
+      radius: radius
+    }, this.checkPanorama);
+  }
+
+  checkPanorama(data, status) {
+    if(status == 'OK') {
+      this.setState({
+        playerLat: data.location.latLng.lat(),
+        playerLng: data.location.latLng.lng()
+      })
+    }
+  }
+
+//MAP UTILITY FUNCTIONS
+
   onMapChange(obj) {
     // console.log("Map center", obj.center);
     // console.log("Zoom", obj.zoom);
@@ -81,22 +239,6 @@ class GameContainer extends React.Component {
     this.setState({currentZoom: obj.zoom});
     this.setState({centerLat: obj.center.lat});
     this.setState({centerLng: obj.center.lng});
-
-  }
-
-  submitPlayerName(event) {
-    event.preventDefault();
-
-      var newName = this.state.tempName;
-      this.setState({
-        player: newName
-      })
-  }
-
-  getPlayerName(event) {
-    this.setState({
-      tempName: event.target.value
-    })
   }
 
   getDistanceFromLatLngInKm(lat1,lng1,lat2,lng2) {
@@ -114,117 +256,8 @@ class GameContainer extends React.Component {
     return deg * (Math.PI/180)
   }
 
-  submitOrb(event) {
-    event.preventDefault();
-
-    let attackDetails = {
-      attackingPlayer: this.state.player,
-      attackZoom: this.state.currentZoom,
-      attackCenter: {attackLat: this.state.centerLat, attackLng: this.state.centerLng}
-    }
-
-    this.socket.emit('attack', attackDetails);
-  }
 
 
-
-
-  // submitOrb(event) {
-  //   event.preventDefault();
-  //
-  //   const range = this.getDistanceFromLatLngInKm(this.state.playerLat, this.state.playerLng, this.state.centerLat, this.state.centerLng)
-  //
-  //   console.log("Range", range);
-  //
-  //   let spellRange = 0;
-  //   let damage = 0;
-  //
-  //   switch(this.state.currentZoom) {
-  //     case 3:
-  //       spellRange = 2516;
-  //       damage = 1;
-  //       break;
-  //     case 4:
-  //       spellRange = 1385;
-  //       damage = 2;
-  //       break;
-  //     case 5:
-  //       spellRange = 727.25;
-  //       damage = 4;
-  //       break;
-  //     case 6:
-  //       spellRange = 371.25;
-  //       damage = 8;
-  //       break;
-  //     case 7:
-  //       spellRange = 188;
-  //       damage = 16;
-  //       break;
-  //     case 8:
-  //       spellRange = 94.5;
-  //       damage = 32;
-  //       break;
-  //     case 9:
-  //       spellRange = 47.5;
-  //       damage = 64;
-  //       break;
-  //     case 10:
-  //       spellRange = 23.75;
-  //       damage = 128;
-  //       break;
-  //     case 11:
-  //       spellRange = 12;
-  //       damage = 256;
-  //       break;
-  //     case 12:
-  //       spellRange = 6;
-  //       damage = 512;
-  //       break;
-  //     case 13:
-  //       spellRange = 3;
-  //       damage = 1024;
-  //       break;
-  //     case 14:
-  //       spellRange = 1.5;
-  //       damage = 2048;
-  //       break;
-  //     case 15:
-  //       spellRange = 0.75;
-  //       damage = 4096;
-  //       break;
-  //     case 16:
-  //       spellRange = 0.37;
-  //       damage = 8192;
-  //       break;
-  //     default:
-  //     console.log("Nuthin");
-  //   }
-  //
-  //   if(range <= spellRange) {
-  //     console.log("Hit! For:", damage);
-  //   }
-  // }
-
-
-  submitScry(event) {
-    event.preventDefault();
-    console.log("submitScry clicked");
-    var currentScryStatus = this.state.scry;
-    // var panoramaDiv = document.getElementById("scry-panorama");
-
-    if(!currentScryStatus) {
-      this.setState({scry: true})
-
-
-
-      // panoramaDiv.style.display = "block";
-
-    } else {
-      this.setState({scry: false})
-      // panoramaDiv.style.display = "none";
-
-    }
-  }
 
   render() {
     return(

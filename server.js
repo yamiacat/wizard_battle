@@ -11,9 +11,19 @@ app.get('/', function (req, res) {
 
 
 io.on('connection', function(socket) {
+
   socket.on('attack', (attackDetails) => {
     io.sockets.emit('attack', attackDetails);
   });
+
+  socket.on('broadcast', (broadcastDetails) => {
+    io.sockets.emit('broadcast', broadcastDetails);
+  });
+
+  socket.on('scry', (scryDetails) => {
+    io.sockets.emit('scry', scryDetails);
+  });
+
 });
 
 
