@@ -1,12 +1,41 @@
+#game-header {
+  width: 300px;
+  position: absolute;
+  margin: 0;
+}
+
+#game-header h1 {
+  margin: 5px;
+}
+
+
+#game-status {
+  position: absolute;
+  width: 450px;
+}
+
+#game-status h2 {
+ margin: 5px;
+}
+
 #status-layer {
   position: absolute;
-  width: inherit;
+}
+
+#game-messages {
+  position: absolute;
+  left: 548px;
+  top: -50px;
+  border: 1px solid #888;
+  width: 450px;
+  height: 115px;
 }
 
 #magic-layer {
   width: 1000px;
   height: 500px;
   position: absolute;
+  top: 70px;
 }
 
 #magic-layer-wrapper {
@@ -47,7 +76,7 @@
   width: 490px;
   height: 490px;
   left: 250px;
-  top: 70px;
+  top: 73px;
   border-radius: 50%;
   border: 3px solid tomato;
   z-index: 10;
@@ -73,7 +102,7 @@
 
 #orb-cast {
   position: absolute;
-  left: 500px;
+  left: 450px;
 }
 
 #scry-cast {
@@ -90,7 +119,7 @@
 
 #spell-buttons {
   position: absolute;
-  top: 500px;
+  top: 600px;
 }
 
 #clue-mask {

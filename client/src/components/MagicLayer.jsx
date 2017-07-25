@@ -49,7 +49,6 @@ class MagicLayer extends React.Component {
       </div>
     }
 
-    console.log("Magic Layer here, scryStatus:", this.props.scryStatus)
 
     if(!this.props.scryStatus) {
       var mainPanel =
@@ -77,7 +76,6 @@ class MagicLayer extends React.Component {
       <div id="magic-layer-wrapper">
       <div id="magic-layer">
             {mainPanel}
-        <h3>I am Magic Layer</h3>
       </div>
       {spellButton}
       </div>

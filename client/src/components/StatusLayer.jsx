@@ -20,14 +20,19 @@ class StatusLayer extends React.Component {
       />
     } else if (this.props.player && this.props.playerLat && !this.props.scryStatus) {
       activeComponent = <OrbSpell/>;
-      var gameStatus = `${this.props.player}`
+      var gameStatus = `${this.props.player}, you have ${this.props.health} health`
     } else {
-      var gameStatus = `${this.props.scryedPlayer} is here!`
+      var gameStatus = `${this.props.player}, you have ${this.props.health} health`
     }
 
     return(
       <div id="status-layer">
-        <h2>{gameStatus}</h2>
+        <div id="game-status">
+          <h2>{gameStatus}</h2>
+          <div id="game-messages">
+            {this.props.gameMessage}
+          </div>
+        </div>
         {activeComponent}
         <MagicLayer
           defaultCenter={this.props.defaultCenter}

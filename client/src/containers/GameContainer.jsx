@@ -21,7 +21,8 @@ class GameContainer extends React.Component {
       scry: false,
       scryedLat: null,
       scryedLng: null,
-      scryedPlayer: null
+      scryedPlayer: null,
+      gameMessage: null
     }
 
     this.socket = io();
@@ -29,7 +30,6 @@ class GameContainer extends React.Component {
     this.socket.on('broadcast', this.receiveBroadcast.bind(this));
     this.socket.on('scryRequest', this.receiveScryRequest.bind(this));
     this.socket.on('scryTransmit', this.receiveScryTransmit.bind(this));
-
 
 
     this.getPlayerName = this.getPlayerName.bind(this);
@@ -43,7 +43,7 @@ class GameContainer extends React.Component {
     this.sufferDamage = this.sufferDamage.bind(this);
   }
 
-//SOCKET FUNCTIONS
+  //SOCKET FUNCTIONS
 
   submitOrb(event) {
     event.preventDefault();
@@ -61,8 +61,6 @@ class GameContainer extends React.Component {
     if(attackDetails.attackingPlayer !== this.state.player) {
 
       const range = this.getDistanceFromLatLngInKm(this.state.playerLat, this.state.playerLng, attackDetails.attackCenter.attackLat, attackDetails.attackCenter.attackLng)
-
-      console.log("Range", range);
 
       let spellRange = 0;
       let damage = 0;
@@ -130,7 +128,6 @@ class GameContainer extends React.Component {
 
       if(range <= spellRange) {
         this.sufferDamage(damage, attackDetails.attackingPlayer)
-        console.log("Hit! For:", damage);
       }
     }
   }
@@ -138,12 +135,20 @@ class GameContainer extends React.Component {
   sufferDamage(damage, attackingPlayer) {
     let currentHealth = this.state.health;
     let updatedHealth = currentHealth - damage;
-    this.setState({health: updatedHealth});
 
     let fatality = false;
     if(updatedHealth < 1) {
       fatality = true;
-      }
+      this.setState({
+        health: updatedHealth,
+        gameMessage: `You were obliterated with ${damage} damage by ${attackingPlayer}!`
+      });
+    } else {
+      this.setState({
+        health: updatedHealth,
+        gameMessage: `You were zapped for ${damage} health by ${attackingPlayer}!`
+      });
+    }
     let broadcastDetails = {
       attackingPlayer: attackingPlayer,
       hitPlayer: this.state.player,
@@ -155,15 +160,17 @@ class GameContainer extends React.Component {
 
 
   receiveBroadcast(broadcastDetails) {
-    if(broadcastDetails.fatality == true && broadcastDetails.attackingPlayer == this.state.player) {
-      console.log("You killed ", broadcastDetails.hitPlayer);
-    } else if (broadcastDetails.fatality == true && broadcastDetails.attackingPlayer != this.state.player) {
-      console.log("Someone killed ", broadcastDetails.hitPlayer);
-    } else if (broadcastDetails.attackingPlayer == this.state.player) {
-      console.log("You hit", broadcastDetails.hitPlayer + " for " + broadcastDetails.damage);
+    if(broadcastDetails.hitPlayer !== this.state.player) {
+      if(broadcastDetails.fatality == true && broadcastDetails.attackingPlayer == this.state.player) {
+        this.setState({gameMessage: `You killed ${broadcastDetails.hitPlayer}!`});
+      } else if (broadcastDetails.fatality == true && broadcastDetails.attackingPlayer != this.state.player) {
+        this.setState({gameMessage: `${broadcastDetails.attackingPlayer} killed ${broadcastDetails.hitPlayer}!`});
+      } else if (broadcastDetails.attackingPlayer == this.state.player) {
+        this.setState({gameMessage: `You hexed ${broadcastDetails.hitPlayer} for ${broadcastDetails.damage} damage!`});
+
+      }
     }
   }
-
   submitScry(event) {
     event.preventDefault();
 
@@ -183,14 +190,14 @@ class GameContainer extends React.Component {
   receiveScryRequest(scryRequestDetails) {
     if(scryRequestDetails.scryer != this.state.player) {
 
-    let scryTransmitDetails = {
-      scryedPlayer: this.state.player,
-      scryedLat: this.state.playerLat,
-      scryedLng: this.state.playerLng
+      let scryTransmitDetails = {
+        scryedPlayer: this.state.player,
+        scryedLat: this.state.playerLat,
+        scryedLng: this.state.playerLng
+      }
+      this.socket.emit('scryTransmit', scryTransmitDetails);
     }
-    this.socket.emit('scryTransmit', scryTransmitDetails);
   }
-}
 
   receiveScryTransmit(scryTransmitDetails) {
     this.setState({
@@ -202,15 +209,15 @@ class GameContainer extends React.Component {
 
 
 
-//PLAYER SETUP FUNCTIONS
+  //PLAYER SETUP FUNCTIONS
 
   submitPlayerName(event) {
     event.preventDefault();
 
-      var newName = this.state.tempName;
-      this.setState({
-        player: newName
-      })
+    var newName = this.state.tempName;
+    this.setState({
+      player: newName
+    })
   }
 
   getPlayerName(event) {
@@ -250,7 +257,7 @@ class GameContainer extends React.Component {
     }
   }
 
-//MAP UTILITY FUNCTIONS
+  //MAP UTILITY FUNCTIONS
 
   onMapChange(obj) {
     // console.log("Map center", obj.center);
@@ -283,20 +290,14 @@ class GameContainer extends React.Component {
 
   render() {
     return(
-      <div>
+      <div id="game-header">
         <h1>Wizard BATTLE</h1>
         <StatusLayer
           defaultCenter={this.state.defaultCenter}
           defaultZoom={this.state.defaultZoom}
-          onMapChange={this.onMapChange}
-          onMapClick={this.onMapClick}
           player={this.state.player}
           playerLat={this.state.playerLat}
           playerLng={this.state.playerLng}
-          submitPlayerName={this.submitPlayerName}
-          getPlayerName={this.getPlayerName}
-          submitOrb={this.submitOrb}
-          submitScry={this.submitScry}
           scryStatus={this.state.scry}
           currentZoom={this.state.currentZoom}
           centerLat={this.state.centerLat}
@@ -304,6 +305,15 @@ class GameContainer extends React.Component {
           scryedPlayer={this.state.scryedPlayer}
           scryedLat={this.state.scryedLat}
           scryedLng={this.state.scryedLng}
+          health={this.state.health}
+          gameMessage={this.state.gameMessage}
+
+          onMapChange={this.onMapChange}
+          onMapClick={this.onMapClick}
+          submitPlayerName={this.submitPlayerName}
+          getPlayerName={this.getPlayerName}
+          submitOrb={this.submitOrb}
+          submitScry={this.submitScry}
         />
       </div>
     )
