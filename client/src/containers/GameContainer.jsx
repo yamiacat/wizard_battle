@@ -18,12 +18,19 @@ class GameContainer extends React.Component {
       playerLat: null,
       playerLng: null,
       tempName: null,
-      scry: false
+      scry: false,
+      scryedLat: null,
+      scryedLng: null,
+      scryedPlayer: null
     }
 
     this.socket = io();
     this.socket.on('attack', this.receiveAttack.bind(this));
     this.socket.on('broadcast', this.receiveBroadcast.bind(this));
+    this.socket.on('scryRequest', this.receiveScryRequest.bind(this));
+    this.socket.on('scryTransmit', this.receiveScryTransmit.bind(this));
+
+
 
     this.getPlayerName = this.getPlayerName.bind(this);
     this.submitPlayerName = this.submitPlayerName.bind(this);
@@ -130,15 +137,10 @@ class GameContainer extends React.Component {
 
   sufferDamage(damage, attackingPlayer) {
     let currentHealth = this.state.health;
-    console.log("currentHealth", currentHealth);
-
     let updatedHealth = currentHealth - damage;
-    console.log("updatedHealth", updatedHealth);
     this.setState({health: updatedHealth});
 
-
     let fatality = false;
-
     if(updatedHealth < 1) {
       fatality = true;
       }
@@ -149,7 +151,6 @@ class GameContainer extends React.Component {
       fatality: fatality
     }
     this.socket.emit('broadcast', broadcastDetails);
-    console.log("broadcastDetails", broadcastDetails);
   }
 
 
@@ -163,20 +164,41 @@ class GameContainer extends React.Component {
     }
   }
 
-
-
   submitScry(event) {
     event.preventDefault();
-    console.log("submitScry clicked");
+
     var currentScryStatus = this.state.scry;
     if(!currentScryStatus) {
       this.setState({scry: true})
+
+      let scryRequestDetails = {
+        scryer: this.state.player
+      }
+      this.socket.emit('scryRequest', scryRequestDetails);
     } else {
       this.setState({scry: false})
     }
   }
 
+  receiveScryRequest(scryRequestDetails) {
+    if(scryRequestDetails.scryer != this.state.player) {
 
+    let scryTransmitDetails = {
+      scryedPlayer: this.state.player,
+      scryedLat: this.state.playerLat,
+      scryedLng: this.state.playerLng
+    }
+    this.socket.emit('scryTransmit', scryTransmitDetails);
+  }
+}
+
+  receiveScryTransmit(scryTransmitDetails) {
+    this.setState({
+      scryedPlayer: scryTransmitDetails.scryedPlayer,
+      scryedLat: scryTransmitDetails.scryedLat,
+      scryedLng: scryTransmitDetails.scryedLng
+    })
+  }
 
 
 
@@ -279,6 +301,9 @@ class GameContainer extends React.Component {
           currentZoom={this.state.currentZoom}
           centerLat={this.state.centerLat}
           centerLng={this.state.centerLng}
+          scryedPlayer={this.state.scryedPlayer}
+          scryedLat={this.state.scryedLat}
+          scryedLng={this.state.scryedLng}
         />
       </div>
     )

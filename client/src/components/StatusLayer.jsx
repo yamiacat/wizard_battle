@@ -22,7 +22,7 @@ class StatusLayer extends React.Component {
       activeComponent = <OrbSpell/>;
       var gameStatus = `${this.props.player}`
     } else {
-      var gameStatus = `${this.props.player}`
+      var gameStatus = `${this.props.scryedPlayer} is here!`
     }
 
     return(
@@ -42,6 +42,9 @@ class StatusLayer extends React.Component {
           currentZoom={this.props.currentZoom}
           centerLat={this.props.centerLat}
           centerLng={this.props.centerLng}
+          scryedPlayer={this.props.scryedPlayer}
+          scryedLat={this.props.scryedLat}
+          scryedLng={this.props.scryedLng}
           />
       </div>
     )

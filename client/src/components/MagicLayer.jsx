@@ -49,7 +49,7 @@ class MagicLayer extends React.Component {
       </div>
     }
 
-
+    console.log("Magic Layer here, scryStatus:", this.props.scryStatus)
 
     if(!this.props.scryStatus) {
       var mainPanel =
@@ -68,12 +68,9 @@ class MagicLayer extends React.Component {
         </GoogleMapReact>
     } else {
       var mainPanel = <ScryPanorama
-        playerLat={this.props.playerLat}
-        playerLng={this.props.playerLng}
+        scryedLat={this.props.scryedLat}
+        scryedLng={this.props.scryedLng}
       ></ScryPanorama>
-
-
-
     }
 
     return(

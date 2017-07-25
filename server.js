@@ -20,8 +20,12 @@ io.on('connection', function(socket) {
     io.sockets.emit('broadcast', broadcastDetails);
   });
 
-  socket.on('scry', (scryDetails) => {
-    io.sockets.emit('scry', scryDetails);
+  socket.on('scryRequest', (scryRequestDetails) => {
+    io.sockets.emit('scryRequest', scryRequestDetails);
+  });
+
+  socket.on('scryTransmit', (scryTransmitDetails) => {
+    io.sockets.emit('scryTransmit', scryTransmitDetails);
   });
 
 });
