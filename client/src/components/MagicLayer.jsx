@@ -32,7 +32,7 @@ class MagicLayer extends React.Component {
       var spellButton = null;
       var center = this.props.defaultCenter;
       var zoom = this.props.defaultZoom;
-    } else {
+    } else if (this.props.health > 0) {
       var center = {lat: this.props.centerLat, lng: this.props.centerLng};
       var zoom = this.props.currentZoom;
       var playerIcon = <PlayerIcon
@@ -46,6 +46,11 @@ class MagicLayer extends React.Component {
       <ScryCast
         submitScry={this.props.submitScry}
       />
+      </div>
+    } else {
+      var playerIcon = null;
+      var spellButton =  <div id="spell-buttons">
+        <h1>YOU DED</h1>
       </div>
     }
 

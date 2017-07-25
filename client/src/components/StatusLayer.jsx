@@ -50,6 +50,7 @@ class StatusLayer extends React.Component {
           scryedPlayer={this.props.scryedPlayer}
           scryedLat={this.props.scryedLat}
           scryedLng={this.props.scryedLng}
+          health={this.props.health}
           />
       </div>
     )

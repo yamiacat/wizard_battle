@@ -128,6 +128,12 @@ class GameContainer extends React.Component {
 
       if(range <= spellRange) {
         this.sufferDamage(damage, attackDetails.attackingPlayer)
+      } else {
+        let broadcastDetails = {
+          attackingPlayer: attackDetails.attackingPlayer,
+          miss: true
+        }
+        this.socket.emit('broadcast', broadcastDetails);
       }
     }
   }
@@ -161,7 +167,9 @@ class GameContainer extends React.Component {
 
   receiveBroadcast(broadcastDetails) {
     if(broadcastDetails.hitPlayer !== this.state.player) {
-      if(broadcastDetails.fatality == true && broadcastDetails.attackingPlayer == this.state.player) {
+      if(broadcastDetails.miss == true && broadcastDetails.attackingPlayer == this.state.player) {
+        this.setState({gameMessage: `Your spell has no effect...`});
+      } else if(broadcastDetails.fatality == true && broadcastDetails.attackingPlayer == this.state.player) {
         this.setState({gameMessage: `You killed ${broadcastDetails.hitPlayer}!`});
       } else if (broadcastDetails.fatality == true && broadcastDetails.attackingPlayer != this.state.player) {
         this.setState({gameMessage: `${broadcastDetails.attackingPlayer} killed ${broadcastDetails.hitPlayer}!`});
@@ -188,7 +196,7 @@ class GameContainer extends React.Component {
   }
 
   receiveScryRequest(scryRequestDetails) {
-    if(scryRequestDetails.scryer != this.state.player) {
+    if(scryRequestDetails.scryer !== this.state.player) {
 
       let scryTransmitDetails = {
         scryedPlayer: this.state.player,
@@ -200,13 +208,15 @@ class GameContainer extends React.Component {
   }
 
   receiveScryTransmit(scryTransmitDetails) {
-    this.setState({
-      scryedPlayer: scryTransmitDetails.scryedPlayer,
-      scryedLat: scryTransmitDetails.scryedLat,
-      scryedLng: scryTransmitDetails.scryedLng
-    })
-  }
+    if(scryTransmitDetails.scryedPlayer !== this.state.player) {
 
+      this.setState({
+        scryedPlayer: scryTransmitDetails.scryedPlayer,
+        scryedLat: scryTransmitDetails.scryedLat,
+        scryedLng: scryTransmitDetails.scryedLng
+      })
+    }
+  }
 
 
   //PLAYER SETUP FUNCTIONS
