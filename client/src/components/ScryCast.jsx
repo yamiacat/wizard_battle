@@ -5,7 +5,7 @@ export const ScryCast = (props) => {
   return(
     <div id="scry-cast">
       <form onSubmit={props.submitScry}>
-        <input type="submit" value="See through someone's EYES"></input>
+        <button type="submit" value="submit">See through someone's EYES</button>
       </form>
     </div>
   )
