@@ -54,22 +54,35 @@ class GameContainer extends React.Component {
     if(this.state.timedOut === false) {
       this.setState({
         timedOut: true,
-        chargeAnimation: {animationPlayState: 'running'}
+        chargeAnimation: {animationPlayState: 'running',
+        animationName: 'charging'}
       })
 
-      window.setTimeout(() => {this.setState({
-        timedOut: false,
-        chargeAnimation: {animationPlayState: 'paused'}
-        })}, 3000);
+      window.setTimeout(() => {this.setState(
+        {chargeAnimation: {animationName: ''}})
+        console.log("animationName", this.state.chargeAnimation);
+        window.setTimeout(() => {this.setState(
+          {timedOut: false,
+            chargeAnimation: {animationPlayState: 'paused',
+          animationName: 'charging'}}
+          )
 
-      let attackDetails = {
-        attackingPlayer: this.state.player,
-        attackZoom: this.state.currentZoom,
-        attackCenter: {attackLat: this.state.centerLat, attackLng: this.state.centerLng}
+
+          console.log("animationName 2", this.state.chargeAnimation);
+        }, 10);
+
+      }, 2990);
+
+
+
+        let attackDetails = {
+          attackingPlayer: this.state.player,
+          attackZoom: this.state.currentZoom,
+          attackCenter: {attackLat: this.state.centerLat, attackLng: this.state.centerLng}
+        }
+        this.socket.emit('attack', attackDetails);
       }
-      this.socket.emit('attack', attackDetails);
     }
-  }
 
   receiveAttack(attackDetails) {
 

@@ -40,8 +40,6 @@ class StatusLayer extends React.Component {
         width: healthPercentage}
     }
 
-    console.log("healthLevel", healthLevel);
-
     return(
       <div id="status-layer">
         <div id="game-status">
