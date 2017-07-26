@@ -15,14 +15,15 @@ class PlayerWelcome extends React.Component {
           id={this.props.player}
           type="text"
           onKeyUp={this.props.getPlayerName}
-          placeholder="Choose your wizarding name!">
+          placeholder="Choose your wizarding name!"
+          autoFocus>
         </input>
         <input type="submit" value="Submit"></input>
       </form>
     } else {
       playerChoice = <h4 className="player-input">Click on the map to choose your start position</h4>
     }
-    
+
 
     return(
       <div id="player-welcome">

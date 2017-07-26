@@ -23,7 +23,7 @@ class GameContainer extends React.Component {
       scryedLng: null,
       scryedPlayer: null,
       gameMessage: null,
-      attackMessage: null,
+      attackMessages: [],
       timedOut: false,
       chargeAnimation: {animationPlayState: 'paused'}
     }
@@ -45,6 +45,7 @@ class GameContainer extends React.Component {
     this.submitScry = this.submitScry.bind(this);
     this.sufferDamage = this.sufferDamage.bind(this);
     this.keyListen = this.keyListen.bind(this);
+    this.addAttackMessage = this.addAttackMessage.bind(this);
   }
 
   //SOCKET FUNCTIONS
@@ -53,6 +54,8 @@ class GameContainer extends React.Component {
     event.preventDefault();
 
     if(this.state.timedOut === false) {
+      this.addAttackMessage('You cast a spell....');
+
       this.setState({
         timedOut: true,
         chargeAnimation: {animationPlayState: 'running',
@@ -79,7 +82,6 @@ class GameContainer extends React.Component {
   }
 
   keyListen(event) {
-    // document.getElementById("magic-layer").focus()
     if(event.key === " " && this.state.health > 0) {
       this.submitOrb(event);
     } else if (event.key === "v") {
@@ -198,18 +200,32 @@ class GameContainer extends React.Component {
 
   receiveBroadcast(broadcastDetails) {
     if(broadcastDetails.hitPlayer !== this.state.player) {
-      if(broadcastDetails.miss == true && broadcastDetails.attackingPlayer == this.state.player) {
-        this.setState({attackMessage: `Your spell has no effect...`});
-      } else if(broadcastDetails.fatality == true && broadcastDetails.attackingPlayer == this.state.player) {
-        this.setState({attackMessage: `You killed ${broadcastDetails.hitPlayer}!`});
+
+// // FOR MASS FREE FOR ALL, REMOVE THIS
+//       if(broadcastDetails.miss == true && broadcastDetails.attackingPlayer == this.state.player) {
+//         this.setState({attackMessages: `Your spell has no effect...`});
+//       } else
+      if(broadcastDetails.fatality == true && broadcastDetails.attackingPlayer == this.state.player) {
+        this.addAttackMessage(`You killed ${broadcastDetails.hitPlayer}!`);
       } else if (broadcastDetails.fatality == true && broadcastDetails.attackingPlayer != this.state.player) {
         this.setState({gameMessage: `${broadcastDetails.attackingPlayer} killed ${broadcastDetails.hitPlayer}!`});
-      } else if (broadcastDetails.attackingPlayer == this.state.player) {
-        this.setState({attackMessage: `You hexed ${broadcastDetails.hitPlayer} for ${broadcastDetails.damage} damage!`});
+      } else if (broadcastDetails.attackingPlayer == this.state.player && broadcastDetails.damage) {
+        this.addAttackMessage(`You hexed ${broadcastDetails.hitPlayer} for ${broadcastDetails.damage} damage!`);
 
       }
     }
   }
+
+  addAttackMessage(message){
+    var messages = this.state.attackMessages;
+    let newMessages = [message, ...messages];
+    this.setState({
+      attackMessages: newMessages
+    });
+  }
+
+
+
   submitScry(event) {
     event.preventDefault();
 
@@ -349,7 +365,7 @@ class GameContainer extends React.Component {
           scryedLng={this.state.scryedLng}
           health={this.state.health}
           gameMessage={this.state.gameMessage}
-          attackMessage={this.state.attackMessage}
+          attackMessages={this.state.attackMessages}
           chargeAnimation={this.state.chargeAnimation}
 
           onMapChange={this.onMapChange}

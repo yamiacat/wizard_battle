@@ -40,6 +40,10 @@ class StatusLayer extends React.Component {
         width: healthPercentage}
     }
 
+    var messages = this.props.attackMessages.map((message, index) => {
+        return <li key={index}> {message} </li>
+      });
+
     return(
       <div id="status-layer">
         <div id="game-status">
@@ -49,7 +53,7 @@ class StatusLayer extends React.Component {
           </div>
           <div id="game-messages">
             <p>{this.props.gameMessage}</p>
-            <p>{this.props.attackMessage}</p>
+            <ul>{messages}</ul>
           </div>
         </div>
         {activeComponent}

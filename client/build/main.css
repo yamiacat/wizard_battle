@@ -24,6 +24,7 @@
 
 #game-messages {
   position: absolute;
+  overflow: hidden;
   left: 548px;
   top: -50px;
   border: 1px solid #888;
