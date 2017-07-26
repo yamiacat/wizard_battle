@@ -23,7 +23,6 @@ class GameContainer extends React.Component {
       scryedLng: null,
       scryedPlayer: null,
       gameMessage: null,
-      magicMessage: null,
       attackMessage: null,
       timedOut: false,
       chargeAnimation: {animationPlayState: 'paused'}
@@ -55,13 +54,11 @@ class GameContainer extends React.Component {
     if(this.state.timedOut === false) {
       this.setState({
         timedOut: true,
-        magicMessage: `Magic charging...`,
         chargeAnimation: {animationPlayState: 'running'}
       })
 
       window.setTimeout(() => {this.setState({
         timedOut: false,
-        magicMessage: `Magic ready...`,
         chargeAnimation: {animationPlayState: 'paused'}
         })}, 3000);
 
@@ -71,8 +68,6 @@ class GameContainer extends React.Component {
         attackCenter: {attackLat: this.state.centerLat, attackLng: this.state.centerLng}
       }
       this.socket.emit('attack', attackDetails);
-    } else {
-      this.setState({magicMessage: `Magic is recharging!`})
     }
   }
 
@@ -282,8 +277,7 @@ class GameContainer extends React.Component {
     if(status == 'OK') {
       this.setState({
         playerLat: data.location.latLng.lat(),
-        playerLng: data.location.latLng.lng(),
-        magicMessage: `Magic ready...`
+        playerLng: data.location.latLng.lng()
       })
     }
   }
@@ -338,7 +332,6 @@ class GameContainer extends React.Component {
           scryedLng={this.state.scryedLng}
           health={this.state.health}
           gameMessage={this.state.gameMessage}
-          magicMessage={this.state.magicMessage}
           attackMessage={this.state.attackMessage}
           chargeAnimation={this.state.chargeAnimation}
 

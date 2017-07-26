@@ -31,6 +31,18 @@
   height: 115px;
 }
 
+#health-bar {
+    width: 100%;
+    background-color: lightgrey;
+}
+#health-indicator {
+    width: 100%;
+    height: 30px;
+    background-color: limegreen;
+}
+
+
+
 #magic-layer {
   width: 1000px;
   height: 500px;
@@ -131,6 +143,38 @@
     border: 4px solid limegreen;
   }
 }
+
+/*#hit-circle {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  left: 145px;
+  top: 145px;
+  border-radius: 50%;
+  border-width: 5px;
+  border-color: tomato;
+  border-style: hidden;
+  z-index: 10;
+  pointer-events: none;
+  animation-name: hitting;
+  animation-duration: 2s;
+  animation-timing-function: ease-in-out;
+  animation-delay: 0;
+  animation-direction: alternate;
+  animation-iteration-count: infinite;
+  animation-play-state: running;
+}
+
+@keyframes hitting {
+  0% {
+    opacity: 0.0;
+  }
+
+  100% {
+    opacity: 1.0;
+  }
+}*/
+
 
 #orb-cast {
   position: absolute;

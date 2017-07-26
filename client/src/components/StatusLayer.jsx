@@ -27,12 +27,18 @@ class StatusLayer extends React.Component {
       var gameStatus = `${this.props.player}, you have ${this.props.health} health`
     }
 
+    var healthPercentage = (this.props.health/10)+"%";
+    var healthLevel = {width: healthPercentage};
+    console.log("healthLevel", healthLevel);
+
     return(
       <div id="status-layer">
         <div id="game-status">
           <h2>{gameStatus}</h2>
+          <div id="health-bar">
+            <div style={healthLevel} id="health-indicator"></div>
+          </div>
           <div id="game-messages">
-            <p>{this.props.magicMessage}</p>
             <p>{this.props.gameMessage}</p>
             <p>{this.props.attackMessage}</p>
           </div>
