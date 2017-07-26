@@ -80,7 +80,7 @@ class GameContainer extends React.Component {
 
   keyListen(event) {
     // document.getElementById("magic-layer").focus()
-    if(event.key === " ") {
+    if(event.key === " " && this.state.health > 0) {
       this.submitOrb(event);
     } else if (event.key === "v") {
       this.submitScry(event);
