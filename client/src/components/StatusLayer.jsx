@@ -28,7 +28,18 @@ class StatusLayer extends React.Component {
     }
 
     var healthPercentage = (this.props.health/10)+"%";
-    var healthLevel = {width: healthPercentage};
+
+    if(this.props.health > 666) {
+      var healthLevel = {backgroundColor: 'limegreen',
+        width: healthPercentage}
+    } else if(this.props.health < 333) {
+      var healthLevel = {backgroundColor: 'red',
+        width: healthPercentage}
+    } else {
+      var healthLevel = {backgroundColor: 'darkorange',
+        width: healthPercentage}
+    }
+
     console.log("healthLevel", healthLevel);
 
     return(
