@@ -14,7 +14,7 @@ class GameContainer extends React.Component {
       centerLat: null,
       centerLng: null,
       player: null,
-      health: 1000,
+      health: null,
       playerLat: null,
       playerLng: null,
       tempName: null,
@@ -44,6 +44,7 @@ class GameContainer extends React.Component {
     this.checkPanorama = this.checkPanorama.bind(this);
     this.submitScry = this.submitScry.bind(this);
     this.sufferDamage = this.sufferDamage.bind(this);
+    this.keyListen = this.keyListen.bind(this);
   }
 
   //SOCKET FUNCTIONS
@@ -60,29 +61,31 @@ class GameContainer extends React.Component {
 
       window.setTimeout(() => {this.setState(
         {chargeAnimation: {animationName: ''}})
-        console.log("animationName", this.state.chargeAnimation);
         window.setTimeout(() => {this.setState(
           {timedOut: false,
             chargeAnimation: {animationPlayState: 'paused',
-          animationName: 'charging'}}
+            animationName: 'charging'}}
           )
-
-
-          console.log("animationName 2", this.state.chargeAnimation);
         }, 10);
-
       }, 2990);
 
-
-
-        let attackDetails = {
-          attackingPlayer: this.state.player,
-          attackZoom: this.state.currentZoom,
-          attackCenter: {attackLat: this.state.centerLat, attackLng: this.state.centerLng}
-        }
-        this.socket.emit('attack', attackDetails);
+      let attackDetails = {
+        attackingPlayer: this.state.player,
+        attackZoom: this.state.currentZoom,
+        attackCenter: {attackLat: this.state.centerLat, attackLng: this.state.centerLng}
       }
+      this.socket.emit('attack', attackDetails);
     }
+  }
+
+  keyListen(event) {
+    // document.getElementById("magic-layer").focus()
+    if(event.key === " ") {
+      this.submitOrb(event);
+    } else if (event.key === "v") {
+      this.submitScry(event);
+    }
+  }
 
   receiveAttack(attackDetails) {
 
@@ -290,7 +293,8 @@ class GameContainer extends React.Component {
     if(status == 'OK') {
       this.setState({
         playerLat: data.location.latLng.lat(),
-        playerLng: data.location.latLng.lng()
+        playerLng: data.location.latLng.lng(),
+        health: 1000
       })
     }
   }
@@ -354,6 +358,7 @@ class GameContainer extends React.Component {
           getPlayerName={this.getPlayerName}
           submitOrb={this.submitOrb}
           submitScry={this.submitScry}
+          keyListen={this.keyListen}
         />
       </div>
     )

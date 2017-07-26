@@ -4,7 +4,7 @@ import {PlayerIcon} from './PlayerIcon.jsx';
 import {OrbCast} from './OrbCast.jsx';
 import {ScryCast} from './ScryCast.jsx';
 import  apiKey from '../apiKey.js'
-import {ScryPanorama} from './ScryPanorama.jsx'
+import ScryPanorama from './ScryPanorama.jsx'
 
 class MagicLayer extends React.Component {
 
@@ -79,7 +79,7 @@ class MagicLayer extends React.Component {
 
     return(
       <div id="magic-layer-wrapper">
-      <div id="magic-layer">
+      <div id="magic-layer" onKeyUp={this.props.keyListen}>
             {mainPanel}
       </div>
       {spellButton}

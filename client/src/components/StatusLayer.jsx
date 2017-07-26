@@ -70,6 +70,7 @@ class StatusLayer extends React.Component {
           scryedLat={this.props.scryedLat}
           scryedLng={this.props.scryedLng}
           health={this.props.health}
+          keyListen={this.props.keyListen}
           />
       </div>
     )
