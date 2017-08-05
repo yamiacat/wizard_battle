@@ -21,6 +21,9 @@ class StatusLayer extends React.Component {
     } else if (this.props.player && this.props.playerLat && !this.props.scryStatus) {
       activeComponent = <OrbSpell
         chargeAnimation={this.props.chargeAnimation}
+        damageAnimation={this.props.damageAnimation}
+        hitSomething={this.props.hitSomething}
+        damageCaused={this.props.damageCaused}
       />;
       var gameStatus = `${this.props.player}, you have ${this.props.health} health`
     } else {

@@ -25,7 +25,10 @@ class GameContainer extends React.Component {
       gameMessage: null,
       attackMessages: [],
       timedOut: false,
-      chargeAnimation: {animationPlayState: 'paused'}
+      chargeAnimation: {animationPlayState: 'paused'},
+      damageAnimation: {animationPlayState: 'paused'},
+      hitSomething: false,
+      damageCaused: 0
     }
 
     this.socket = io();
@@ -59,7 +62,8 @@ class GameContainer extends React.Component {
       this.setState({
         timedOut: true,
         chargeAnimation: {animationPlayState: 'running',
-        animationName: 'charging'}
+          animationName: 'charging'
+        }
       })
 
       window.setTimeout(() => {this.setState(
@@ -172,6 +176,25 @@ class GameContainer extends React.Component {
   }
 
   sufferDamage(damage, attackingPlayer) {
+
+    this.setState({
+      damageAnimation: {animationPlayState: 'running',
+      animationName: 'damaging',
+      borderWidth: damage,
+      width: 1002 - (damage * 2),
+      height: 502 - (damage * 2)
+    }
+    })
+
+    window.setTimeout(() => {this.setState(
+      {damageAnimation: {animationName: ''}})
+      window.setTimeout(() => {this.setState(
+        {damageAnimation: {animationPlayState: 'paused',
+          animationName: 'damaging'}}
+        )
+      }, 10);
+    }, 290);
+
     let currentHealth = this.state.health;
     let updatedHealth = currentHealth - damage;
 
@@ -212,6 +235,15 @@ class GameContainer extends React.Component {
       } else if (broadcastDetails.attackingPlayer == this.state.player && broadcastDetails.damage) {
         this.addAttackMessage(`You hexed ${broadcastDetails.hitPlayer} for ${broadcastDetails.damage} damage!`);
 
+        this.setState({
+            hitSomething: true,
+            damageCaused: broadcastDetails.damage
+        })
+
+        window.setTimeout(() => {this.setState(
+          {hitSomething: false,
+          damageCaused: 0})
+        }, 1000);
       }
     }
   }
@@ -284,12 +316,6 @@ class GameContainer extends React.Component {
   }
 
   onMapClick(obj) {
-    // console.log("onMapClick obj.x", obj.x);
-    // console.log("onMapClick obj.y", obj.y);
-    // console.log("onMapClick obj.lat", obj.lat);
-    // console.log("onMapClick obj.lng", obj.lng);
-    // console.log("onMapClick obj.event", obj.event);
-
     if(!this.state.playerLat && this.state.player) {
       this.placePlayer(obj, 500000);
       this.placePlayer(obj, 5000);
@@ -367,6 +393,9 @@ class GameContainer extends React.Component {
           gameMessage={this.state.gameMessage}
           attackMessages={this.state.attackMessages}
           chargeAnimation={this.state.chargeAnimation}
+          damageAnimation={this.state.damageAnimation}
+          hitSomething={this.state.hitSomething}
+          damageCaused={this.state.damageCaused}
 
           onMapChange={this.onMapChange}
           onMapClick={this.onMapClick}

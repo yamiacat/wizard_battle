@@ -50,6 +50,33 @@
   top: 70px;
 }
 
+#damage-frame {
+  position: absolute;
+  border-style: solid;
+  border-color: red;
+  bottom: -8px;
+  right: -263px;
+  opacity: 0;
+
+  animation-name: damaging;
+  animation-duration: 0.3s;
+  animation-timing-function: ease-in-out;
+  animation-delay: 0;
+  animation-direction: alternate;
+  animation-iteration-count: infinite;
+  animation-play-state: running;
+}
+
+@keyframes damaging {
+  50% {
+    opacity: 1;
+  }
+
+  0%, 100% {
+    opacity: 0;
+  }
+}
+
 #magic-layer-wrapper {
   position: absolute;
 }
@@ -90,7 +117,6 @@
   left: 250px;
   top: 75px;
   border-radius: 50%;
-  /*border: 3px solid tomato;*/
   z-index: 10;
   pointer-events: none;
   animation-name: targeting;
@@ -122,7 +148,7 @@
   border: 3px solid tomato;
   z-index: 10;
   pointer-events: none;
-  /*animation-name: charging;*/
+  animation-name: charging;
   animation-duration: 3s;
   animation-timing-function: ease-in-out;
   animation-delay: 0;
@@ -144,36 +170,51 @@
   }
 }
 
-/*#hit-circle {
+#hit-bar {
+  width: 1000px;
+  height: 1px;
+  padding: -2px;
+  background-color: red;
+  border-color: purple;
+  border-style: solid;
   position: absolute;
-  width: 200px;
-  height: 200px;
-  left: 145px;
-  top: 145px;
-  border-radius: 50%;
-  border-width: 5px;
-  border-color: tomato;
-  border-style: hidden;
-  z-index: 10;
-  pointer-events: none;
+  top: -60px;
+  left: -496px;
+}
+
+#hit-triangle {
+  width: 0;
+  height: 0;
+  border-left: 50px solid transparent;
+  border-right: 50px solid transparent;
+  border-top: 100px solid purple;
+  position: absolute;
+  top: 190px;
+  left: 195px;
+}
+
+.hit-shape {
+  z-index: 11;
   animation-name: hitting;
-  animation-duration: 2s;
+  animation-duration: 1000ms;
   animation-timing-function: ease-in-out;
   animation-delay: 0;
-  animation-direction: alternate;
-  animation-iteration-count: infinite;
+  animation-fill-mode: forwards;
+  animation-direction: normal;
+  animation-iteration-count: 1;
   animation-play-state: running;
 }
 
+
 @keyframes hitting {
-  0% {
-    opacity: 0.0;
+  50% {
+    opacity: 1;
   }
 
-  100% {
-    opacity: 1.0;
+  0%, 100% {
+    opacity: 0;
   }
-}*/
+}
 
 
 #orb-cast {
