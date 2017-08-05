@@ -8,7 +8,7 @@ class GameContainer extends React.Component {
     super(props);
 
     this.state = {
-      defaultCenter: {lat: 59.95, lng: 30.33},
+      defaultCenter: null,
       defaultZoom: 3,
       currentZoom: null,
       centerLat: null,
@@ -50,6 +50,31 @@ class GameContainer extends React.Component {
     this.keyListen = this.keyListen.bind(this);
     this.addAttackMessage = this.addAttackMessage.bind(this);
   }
+
+//CENTER STARTS
+
+componentWillMount() {
+
+  const defaultCenters = [
+    {lat: 53.92, lng: 12.40},
+    {lat: 4.16, lng: 20.49},
+    {lat: 24.64, lng: 92.91},
+    {lat: -22.81, lng: 142.30},
+    {lat: 65.71, lng: 87.99},
+    {lat: 58.60, lng: 147.58},
+    {lat: -24.58, lng: 292.42},
+    {lat: 47.24, lng: 274.84}
+  ];
+
+  const randomDefault = defaultCenters[Math.floor(Math.random() * defaultCenters.length)];
+
+  this.setState({
+    defaultCenter: randomDefault
+  })
+}
+
+
+
 
   //SOCKET FUNCTIONS
 
