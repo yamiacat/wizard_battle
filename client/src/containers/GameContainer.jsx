@@ -28,7 +28,8 @@ class GameContainer extends React.Component {
       chargeAnimation: {animationPlayState: 'paused'},
       damageAnimation: {animationPlayState: 'paused'},
       hitSomething: false,
-      damageCaused: 0
+      damageCaused: 0,
+      otherPlayers: {}
     }
 
     this.socket = io();
@@ -190,12 +191,6 @@ componentWillMount() {
 
       if(range <= spellRange) {
         this.sufferDamage(damage, attackDetails.attackingPlayer)
-      } else {
-        let broadcastDetails = {
-          attackingPlayer: attackDetails.attackingPlayer,
-          miss: true
-        }
-        this.socket.emit('broadcast', broadcastDetails);
       }
     }
   }
@@ -239,6 +234,7 @@ componentWillMount() {
     let broadcastDetails = {
       attackingPlayer: attackingPlayer,
       hitPlayer: this.state.player,
+      hitPlayerHealth: this.state.health,
       damage: damage,
       fatality: fatality
     }
@@ -249,10 +245,10 @@ componentWillMount() {
   receiveBroadcast(broadcastDetails) {
     if(broadcastDetails.hitPlayer !== this.state.player) {
 
-// // FOR MASS FREE FOR ALL, REMOVE THIS
-//       if(broadcastDetails.miss == true && broadcastDetails.attackingPlayer == this.state.player) {
-//         this.setState({attackMessages: `Your spell has no effect...`});
-//       } else
+      let currentOtherPlayers = this.state.otherPlayers;
+
+      currentOtherPlayers[broadcastDetails.hitPlayer] = broadcastDetails.hitPlayerHealth;
+
       if(broadcastDetails.fatality == true && broadcastDetails.attackingPlayer == this.state.player) {
         this.addAttackMessage(`You killed ${broadcastDetails.hitPlayer}!`);
       } else if (broadcastDetails.fatality == true && broadcastDetails.attackingPlayer != this.state.player) {

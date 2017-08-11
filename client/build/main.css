@@ -254,3 +254,13 @@ button {
   background-color: tomato;
   z-index: 10;
 }
+
+#other-players {
+  position: absolute;
+  left: 1000px;
+  top: 70px;
+  height: 500px;
+  width: 300px;
+  border: 1px solid #888;
+  overflow: hidden;
+}

@@ -59,6 +59,9 @@ class StatusLayer extends React.Component {
             <ul>{messages}</ul>
           </div>
         </div>
+        <div id="other-players">
+
+        </div>
         {activeComponent}
         <MagicLayer
           defaultCenter={this.props.defaultCenter}
