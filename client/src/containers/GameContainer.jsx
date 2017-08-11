@@ -417,6 +417,7 @@ componentWillMount() {
           damageAnimation={this.state.damageAnimation}
           hitSomething={this.state.hitSomething}
           damageCaused={this.state.damageCaused}
+          otherPlayers={this.state.otherPlayers}
 
           onMapChange={this.onMapChange}
           onMapClick={this.onMapClick}

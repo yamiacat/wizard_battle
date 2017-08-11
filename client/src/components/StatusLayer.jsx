@@ -2,6 +2,7 @@ import React from 'react';
 import MagicLayer from './MagicLayer.jsx'
 import PlayerWelcome from './PlayerWelcome.jsx';
 import {OrbSpell} from './OrbSpell.jsx';
+import {OtherPlayers} from './OtherPlayers.jsx';
 
 class StatusLayer extends React.Component {
 
@@ -59,9 +60,9 @@ class StatusLayer extends React.Component {
             <ul>{messages}</ul>
           </div>
         </div>
-        <div id="other-players">
-
-        </div>
+        <OtherPlayers
+          otherPlayers={this.props.otherPlayers}
+        />
         {activeComponent}
         <MagicLayer
           defaultCenter={this.props.defaultCenter}
