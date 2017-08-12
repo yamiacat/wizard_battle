@@ -3,6 +3,8 @@ import MagicLayer from './MagicLayer.jsx'
 import PlayerWelcome from './PlayerWelcome.jsx';
 import {OrbSpell} from './OrbSpell.jsx';
 import {OtherPlayers} from './OtherPlayers.jsx';
+import {OrbCast} from './OrbCast.jsx';
+import {ScryCast} from './ScryCast.jsx';
 
 class StatusLayer extends React.Component {
 
@@ -12,13 +14,25 @@ class StatusLayer extends React.Component {
 
   render() {
 
+    let gameStatus;
+    let activeComponent;
+    let spellButton  = <div id="spell-buttons">
+      <OrbCast
+        submitOrb={this.props.submitOrb}
+      />
+      <ScryCast
+        submitScry={this.props.submitScry}
+      />
+      </div>
+
     if(!this.props.player || !this.props.playerLat) {
-      var gameStatus = "Welcome Player";
-      var activeComponent = <PlayerWelcome
+      gameStatus = "Welcome Player";
+      activeComponent = <PlayerWelcome
         player={this.props.player}
         submitPlayerName={this.props.submitPlayerName}
         getPlayerName={this.props.getPlayerName}
       />
+      spellButton = null;
     } else if (this.props.player && this.props.playerLat && !this.props.scryStatus) {
       activeComponent = <OrbSpell
         chargeAnimation={this.props.chargeAnimation}
@@ -26,31 +40,39 @@ class StatusLayer extends React.Component {
         hitSomething={this.props.hitSomething}
         damageCaused={this.props.damageCaused}
       />;
-      var gameStatus = `${this.props.player}, you have ${this.props.health} health`
+      gameStatus = `${this.props.player}, you have ${this.props.health} health`
     } else {
-      var gameStatus = `${this.props.player}, you have ${this.props.health} health`
+      gameStatus = `${this.props.player}, you have ${this.props.health} health`
     }
 
-    var healthPercentage = (this.props.health/10)+"%";
+    let healthPercentage = (this.props.health/10)+"%";
+    var healthLevel;
 
     if(this.props.health > 666) {
-      var healthLevel = {backgroundColor: 'limegreen',
+      healthLevel = {backgroundColor: 'limegreen',
         width: healthPercentage}
-    } else if(this.props.health < 333) {
-      var healthLevel = {backgroundColor: 'red',
+    } else if(this.props.health < 333 && this.props.health > 0) {
+      healthLevel = {backgroundColor: 'red',
         width: healthPercentage}
+    } else if(this.props.health <= 0) {
+      healthLevel = {backgroundColor: 'red',
+        width: healthPercentage}
+      spellButton =  <div id="spell-buttons">
+        <h1>YOU DED</h1>
+      </div>
     } else {
-      var healthLevel = {backgroundColor: 'darkorange',
+      healthLevel = {backgroundColor: 'darkorange',
         width: healthPercentage}
     }
 
-    var messages = this.props.attackMessages.map((message, index) => {
+    let messages = this.props.attackMessages.map((message, index) => {
         return <li key={index}> {message} </li>
       });
 
     return(
       <div id="status-layer">
         <div id="game-status">
+          <h1>Wizard BATTLE</h1>
           <h2>{gameStatus}</h2>
           <div id="health-bar">
             <div style={healthLevel} id="health-indicator"></div>
@@ -85,6 +107,7 @@ class StatusLayer extends React.Component {
               otherPlayers={this.props.otherPlayers}
             />
         </div>
+        {spellButton}
       </div>
     )
   }

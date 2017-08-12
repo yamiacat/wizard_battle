@@ -1,8 +1,6 @@
 import React from 'react';
 import GoogleMapReact from 'google-map-react';
 import {PlayerIcon} from './PlayerIcon.jsx';
-import {OrbCast} from './OrbCast.jsx';
-import {ScryCast} from './ScryCast.jsx';
 import  apiKey from '../apiKey.js'
 import ScryPanorama from './ScryPanorama.jsx'
 
@@ -29,7 +27,6 @@ class MagicLayer extends React.Component {
 
     if(!this.props.playerLat) {
       var playerIcon = null;
-      var spellButton = null;
       var center = this.props.defaultCenter;
       var zoom = this.props.defaultZoom;
     } else if (this.props.health > 0) {
@@ -39,19 +36,8 @@ class MagicLayer extends React.Component {
         lat={this.props.playerLat}
         lng={this.props.playerLng}
       />
-      var spellButton = <div id="spell-buttons">
-      <OrbCast
-        submitOrb={this.props.submitOrb}
-      />
-      <ScryCast
-        submitScry={this.props.submitScry}
-      />
-      </div>
     } else {
       var playerIcon = null;
-      var spellButton =  <div id="spell-buttons">
-        <h1>YOU DED</h1>
-      </div>
     }
 
 
@@ -82,7 +68,6 @@ class MagicLayer extends React.Component {
       <div id="magic-layer" onKeyUp={this.props.keyListen}>
             {mainPanel}
       </div>
-      {spellButton}
       </div>
     )
   }

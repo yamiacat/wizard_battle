@@ -407,8 +407,7 @@ componentWillMount() {
 
   render() {
     return(
-      <div id="game-header">
-        <h1>Wizard BATTLE</h1>
+      <div id="game-container">
         <StatusLayer
           defaultCenter={this.state.defaultCenter}
           defaultZoom={this.state.defaultZoom}
