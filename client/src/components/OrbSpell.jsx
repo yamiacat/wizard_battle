@@ -15,6 +15,7 @@ export const OrbSpell = (props) => {
   }
 
   return(
+    <div id="orb-wrapper">
       <div id="orb-spell">
       <div id="charging-circle"
         style={props.chargeAnimation}></div>
@@ -22,5 +23,6 @@ export const OrbSpell = (props) => {
         style={props.damageAnimation}></div>
         {hitShape}
       </div>
+    </div>
   )
 }

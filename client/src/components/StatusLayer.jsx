@@ -72,10 +72,12 @@ class StatusLayer extends React.Component {
     return(
       <div id="status-layer">
         <div id="game-status">
-          <h1>Wizard BATTLE</h1>
-          <h2>{gameStatus}</h2>
-          <div id="health-bar">
-            <div style={healthLevel} id="health-indicator"></div>
+        <div id="status-left">
+            <h1>Wizard BATTLE</h1>
+            <h2>{gameStatus}</h2>
+            <div id="health-bar">
+              <div style={healthLevel} id="health-indicator"></div>
+            </div>
           </div>
           <div id="game-messages">
             <p>{this.props.gameMessage}</p>

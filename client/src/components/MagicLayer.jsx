@@ -64,10 +64,8 @@ class MagicLayer extends React.Component {
     }
 
     return(
-      <div id="magic-layer-wrapper">
       <div id="magic-layer" onKeyUp={this.props.keyListen}>
             {mainPanel}
-      </div>
       </div>
     )
   }
