@@ -1,5 +1,6 @@
 #game-header {
-  width: 300px;
+  width: 100%;
+  height: 100%;
   position: absolute;
   margin: 0;
 }
@@ -8,54 +9,199 @@
   margin: 5px;
 }
 
+#status-layer {
+  width: 100%;
+  height: 100%
+}
+
+/******************GAME STATUS*******************/
 
 #game-status {
-  position: absolute;
-  width: 450px;
+  /*position: fixed;*/
+  width: 50%;
+  height: 20%;
+  display: flex;
+  flex-direction: column;
+  /*justify-content: space-between;*/
+  flex-wrap: wrap;
 }
 
 #game-status h2 {
  margin: 5px;
 }
 
-#status-layer {
-  position: absolute;
-}
-
-#game-messages {
-  position: absolute;
-  overflow: hidden;
-  left: 548px;
-  top: -50px;
-  border: 1px solid #888;
-  width: 450px;
-  height: 115px;
-}
-
 #health-bar {
-    width: 100%;
+    width: 90%;
     background-color: lightgrey;
+    height: 30px;
 }
 #health-indicator {
     width: 100%;
     height: 30px;
 }
 
+#game-messages {
+  /*position: absolute;*/
+  align-self: flex-end;
+  overflow: hidden;
+  /*left: 548px;
+  top: -50px;*/
+  border: 1px solid #888;
+  width: 90%;
+  height: 115px;
+}
 
+/*****************GAME BLOCK*****************/
+
+#game-block {
+  height: 80%;
+  width: 100%;
+  display: flex;
+}
+
+/*****************OTHER PLAYERS PANEL*****************/
+
+#other-players {
+  /*position: absolute;*/
+  /*display: inline-block;*/
+  /*align-self: flex-end;*/
+  /*left: 1000px;
+  top: 70px;*/
+  height: 80%;
+  width: 30%;
+  border: 1px solid #888;
+  overflow: hidden;
+}
+
+.other-player-wrapper {
+  margin-left: 10px;
+}
+
+.other-player-bar {
+  margin-top: -10px;
+  margin-bottom: -10px;
+}
+
+
+
+#magic-layer-wrapper {
+  /*position: absolute;*/
+  display: flex;
+  height: inherit;
+  width: inherit;
+}
 
 #magic-layer {
-  width: 1000px;
-  height: 500px;
-  position: absolute;
-  top: 70px;
+  height: 100%;
+  width: 100%;
+  /*position: absolute;
+  top: 70px;*/
 }
+
+
+
+
+
+
+#player-icon {
+  position: absolute;
+  width: 50px;
+  height: 75px;
+  left: -25px;
+  top: -75px;
+}
+
+
+#orb-cast {
+  /*position: absolute;*/
+  /*left: 250px;*/
+}
+
+#scry-cast {
+  /*position: absolute;*/
+  /*left: 500px;*/
+}
+
+#scry-panorama {
+  height: inherit;
+  width: inherit;
+  position: absolute;
+  /*display: none;*/
+}
+
+#spell-buttons {
+  /*position: absolute;*/
+  height: auto;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-self: flex-end;
+  /*top: 600px;*/
+}
+
+button {
+  width: 200px;
+  height: 40px;
+  font-weight: bold;
+}
+
+#clue-mask {
+  /*position: absolute;*/
+  /*left: 700px;
+  bottom: 0px;*/
+  height: 14px;
+  width: 300px;
+  background-color: tomato;
+  z-index: 10;
+}
+
+
+
+
+/******************ACTIVE COMPONENTS***********************/
+
+#player-welcome {
+  z-index: 10;
+  background-color: tomato;
+  position: absolute;
+  margin-top: auto;
+  margin-bottom: auto;
+  top: 50%;
+  /*left: 20px;*/
+  padding: 20px;
+  border: 1px solid #888;
+}
+
+#player-form {
+  display: inline-block;
+  width: 370px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.player-input {
+  width: 200px;
+}
+
+
+
+
+
+
+
+
+
+
+
+/******************ANIMATIONS***********************/
 
 #damage-frame {
   position: absolute;
   border-style: solid;
   border-color: red;
-  bottom: -8px;
-  right: -263px;
+  /*bottom: -8px;
+  right: -263px;*/
   opacity: 0;
 
   animation-name: damaging;
@@ -77,99 +223,6 @@
   }
 }
 
-#magic-layer-wrapper {
-  position: absolute;
-}
-
-#player-welcome {
-  z-index: 10;
-  background-color: tomato;
-  position: absolute;
-  top: 250px;
-  left: 20px;
-  padding: 20px;
-  border: 1px solid #888;
-}
-
-#player-form {
-  display: inline-block;
-  width: 370px;
-  margin-left: 20px;
-  margin-right: 20px;
-}
-
-.player-input {
-  width: 200px;
-}
-
-#player-icon {
-  position: absolute;
-  width: 50px;
-  height: 75px;
-  left: -25px;
-  top: -75px;
-}
-
-#orb-spell {
-  position: absolute;
-  width: 490px;
-  height: 490px;
-  left: 250px;
-  top: 75px;
-  border-radius: 50%;
-  z-index: 10;
-  pointer-events: none;
-  animation-name: targeting;
-  animation-duration: 2s;
-  animation-timing-function: ease-in-out;
-  animation-delay: 0;
-  animation-direction: alternate;
-  animation-iteration-count: infinite;
-  animation-play-state: running;
-}
-
-@keyframes targeting {
-  0% {
-    background-color: rgba(255,255,255,0);
-  }
-
-  100% {
-    background-color: rgba(255,0,164,0.1);
-  }
-}
-
-#charging-circle {
-  position: absolute;
-  width: 493px;
-  height: 493px;
-  left: -5px;
-  top: -7px;
-  border-radius: 50%;
-  border: 3px solid tomato;
-  z-index: 10;
-  pointer-events: none;
-  animation-name: charging;
-  animation-duration: 3s;
-  animation-timing-function: ease-in-out;
-  animation-delay: 0;
-  animation-fill-mode: forwards;
-  animation-direction: normal;
-  animation-iteration-count: infinite;
-  animation-play-state: paused;
-}
-
-@keyframes charging {
-  5% {
-    transform: scale(0.1);
-    border: 3px solid red;
-  }
-
-  0%, 100% {
-    transform: scale(1);
-    border: 4px solid limegreen;
-  }
-}
-
 #hit-bar {
   width: 1000px;
   height: 1px;
@@ -178,8 +231,8 @@
   border-color: purple;
   border-style: solid;
   position: absolute;
-  top: -60px;
-  left: -496px;
+  /*top: -60px;
+  left: -496px;*/
 }
 
 #hit-triangle {
@@ -189,8 +242,8 @@
   border-right: 50px solid transparent;
   border-top: 100px solid purple;
   position: absolute;
-  top: 190px;
-  left: 195px;
+  /*top: 190px;
+  left: 195px;*/
 }
 
 .hit-shape {
@@ -217,59 +270,64 @@
 }
 
 
-#orb-cast {
-  position: absolute;
-  left: 250px;
-}
 
-#scry-cast {
+#charging-circle {
   position: absolute;
-  left: 500px;
-}
-
-#scry-panorama {
-  height: inherit;
-  width: inherit;
-  position: absolute;
-  /*display: none;*/
-}
-
-#spell-buttons {
-  position: absolute;
-  top: 600px;
-}
-
-button {
-  width: 200px;
-  height: 40px;
-  font-weight: bold;
-}
-
-#clue-mask {
-  position: absolute;
-  left: 700px;
-  bottom: 0px;
-  height: 14px;
-  width: 300px;
-  background-color: tomato;
+  width: 493px;
+  height: 493px;
+  /*left: -5px;
+  top: -7px;*/
+  border-radius: 50%;
+  border: 3px solid tomato;
   z-index: 10;
+  pointer-events: none;
+  animation-name: charging;
+  animation-duration: 3s;
+  animation-timing-function: ease-in-out;
+  animation-delay: 0;
+  animation-fill-mode: forwards;
+  animation-direction: normal;
+  animation-iteration-count: infinite;
+  animation-play-state: paused;
 }
 
-#other-players {
+@keyframes charging {
+  5% {
+    transform: scale(0.1);
+    border: 3px solid red;
+  }
+
+  0%, 100% {
+    transform: scale(1);
+    border: 4px solid limegreen;
+  }
+}
+
+
+#orb-spell {
   position: absolute;
-  left: 1000px;
-  top: 70px;
-  height: 500px;
-  width: 300px;
-  border: 1px solid #888;
-  overflow: hidden;
+  width: 490px;
+  height: 490px;
+  /*left: 250px;
+  top: 75px;*/
+  border-radius: 50%;
+  z-index: 10;
+  pointer-events: none;
+  animation-name: targeting;
+  animation-duration: 2s;
+  animation-timing-function: ease-in-out;
+  animation-delay: 0;
+  animation-direction: alternate;
+  animation-iteration-count: infinite;
+  animation-play-state: running;
 }
 
-.other-player-wrapper {
-  margin-left: 10px;
-}
+@keyframes targeting {
+  0% {
+    background-color: rgba(255,255,255,0);
+  }
 
-.other-player-bar {
-  margin-top: -10px;
-  margin-bottom: -10px;
+  100% {
+    background-color: rgba(255,0,164,0.1);
+  }
 }

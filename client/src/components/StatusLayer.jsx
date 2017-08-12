@@ -60,29 +60,31 @@ class StatusLayer extends React.Component {
             <ul>{messages}</ul>
           </div>
         </div>
-        <OtherPlayers
-          otherPlayers={this.props.otherPlayers}
-        />
-        {activeComponent}
-        <MagicLayer
-          defaultCenter={this.props.defaultCenter}
-          defaultZoom={this.props.defaultZoom}
-          onMapChange={this.props.onMapChange}
-          onMapClick={this.props.onMapClick}
-          playerLat={this.props.playerLat}
-          playerLng={this.props.playerLng}
-          submitOrb={this.props.submitOrb}
-          submitScry={this.props.submitScry}
-          scryStatus={this.props.scryStatus}
-          currentZoom={this.props.currentZoom}
-          centerLat={this.props.centerLat}
-          centerLng={this.props.centerLng}
-          scryedPlayer={this.props.scryedPlayer}
-          scryedLat={this.props.scryedLat}
-          scryedLng={this.props.scryedLng}
-          health={this.props.health}
-          keyListen={this.props.keyListen}
-          />
+        <div id="game-block">
+          {activeComponent}
+          <MagicLayer
+            defaultCenter={this.props.defaultCenter}
+            defaultZoom={this.props.defaultZoom}
+            onMapChange={this.props.onMapChange}
+            onMapClick={this.props.onMapClick}
+            playerLat={this.props.playerLat}
+            playerLng={this.props.playerLng}
+            submitOrb={this.props.submitOrb}
+            submitScry={this.props.submitScry}
+            scryStatus={this.props.scryStatus}
+            currentZoom={this.props.currentZoom}
+            centerLat={this.props.centerLat}
+            centerLng={this.props.centerLng}
+            scryedPlayer={this.props.scryedPlayer}
+            scryedLat={this.props.scryedLat}
+            scryedLng={this.props.scryedLng}
+            health={this.props.health}
+            keyListen={this.props.keyListen}
+            />
+            <OtherPlayers
+              otherPlayers={this.props.otherPlayers}
+            />
+        </div>
       </div>
     )
   }
