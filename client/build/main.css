@@ -264,3 +264,12 @@ button {
   border: 1px solid #888;
   overflow: hidden;
 }
+
+.other-player-wrapper {
+  margin-left: 10px;
+}
+
+.other-player-bar {
+  margin-top: -10px;
+  margin-bottom: -10px;
+}

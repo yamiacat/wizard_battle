@@ -26,7 +26,7 @@ export const OtherPlayers = (props) => {
 
 
         renderPlayers.push(
-          <div>
+          <div className="other-player-wrapper">
             <p className="other-player-info">{key} - {otherPlayers[key]}</p>
             <div className="other-player-bar" style={healthLevel}></div>
           </div>

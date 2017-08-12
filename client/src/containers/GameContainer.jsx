@@ -243,18 +243,30 @@ componentWillMount() {
 
 
   receiveBroadcast(broadcastDetails) {
-    if(broadcastDetails.hitPlayer !== this.state.player) {
+    let hitPlayerNow = broadcastDetails.hitPlayer;
+
+    if(hitPlayerNow !== this.state.player) {
 
       let currentOtherPlayers = this.state.otherPlayers;
 
-      currentOtherPlayers[broadcastDetails.hitPlayer] = broadcastDetails.hitPlayerHealth;
+      currentOtherPlayers[hitPlayerNow] = broadcastDetails.hitPlayerHealth;
 
       if(broadcastDetails.fatality == true && broadcastDetails.attackingPlayer == this.state.player) {
-        this.addAttackMessage(`You killed ${broadcastDetails.hitPlayer}!`);
+        this.addAttackMessage(`You killed ${hitPlayerNow}!`);
+        console.log("before delete", currentOtherPlayers);
+        delete currentOtherPlayers[hitPlayerNow];
+        this.setState({otherPlayers: currentOtherPlayers});
+        console.log("after delete", currentOtherPlayers);
+
       } else if (broadcastDetails.fatality == true && broadcastDetails.attackingPlayer != this.state.player) {
-        this.setState({gameMessage: `${broadcastDetails.attackingPlayer} killed ${broadcastDetails.hitPlayer}!`});
+        delete currentOtherPlayers.hitPlayerNow;
+
+        this.setState({gameMessage:
+          `${broadcastDetails.attackingPlayer} killed ${hitPlayerNow}!`,
+          otherPlayers: currentOtherPlayers
+        });
       } else if (broadcastDetails.attackingPlayer == this.state.player && broadcastDetails.damage) {
-        this.addAttackMessage(`You hexed ${broadcastDetails.hitPlayer} for ${broadcastDetails.damage} damage!`);
+        this.addAttackMessage(`You hexed ${hitPlayerNow} for ${broadcastDetails.damage} damage!`);
 
         this.setState({
             hitSomething: true,
