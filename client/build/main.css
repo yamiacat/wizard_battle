@@ -86,8 +86,6 @@
 
 
 #magic-wrapper {
-  /*height: inherit;*/
-  /*width: inherit;*/
   position: relative;
   top: 0;
   left: 0;
@@ -113,19 +111,15 @@
 
 
 #orb-cast {
-  /*position: absolute;*/
-  /*left: 250px;*/
 }
 
 #scry-cast {
-  /*position: absolute;*/
-  /*left: 500px;*/
 }
 
 #scry-panorama {
-  height: inherit;
-  width: inherit;
-  position: absolute;
+  height: 100%;
+  min-width: 500px;
+  min-height: 500px;
   /*display: none;*/
 }
 
@@ -143,11 +137,11 @@ button {
 }
 
 #clue-mask {
-  /*position: absolute;*/
-  /*left: 700px;
-  bottom: 0px;*/
+  position: absolute;
+  left: 0px;
+  bottom: 0px;
   height: 14px;
-  width: 300px;
+  width: 100%;
   background-color: tomato;
   z-index: 10;
 }
@@ -164,7 +158,6 @@ button {
   margin-top: auto;
   margin-bottom: auto;
   top: 50%;
-  /*left: 20px;*/
   padding: 20px;
   border: 1px solid #888;
 }
@@ -192,15 +185,11 @@ button {
 }
 
 #orb-wrapper {
-  /*position: absolute;*/
   left: 30%;
-  /*align-self: center;*/
 }
 
 #hit-wrapper {
-  /*position: absolute;*/
   left: 30%;
-  /*align-self: center;*/
 }
 
 #orb-spell {
@@ -271,8 +260,6 @@ button {
   align-self: center;
   pointer-events: none;
   box-sizing: border-box;
-  /*display: table-cell;*/
-  /*align-self: center;*/
   border-style: solid;
   border-color: red;
   border-width: 0;
@@ -298,7 +285,6 @@ button {
 }
 
 #hit-bar {
-  /*position: absolute;*/
   left: -500px;
   width: 1000px;
   height: 1px;
@@ -309,9 +295,6 @@ button {
 }
 
 #hit-triangle {
-  /*position: relative;*/
-  /*display: table-cell;
-  align-self: center;*/
   left: 25px;
   width: 0;
   height: 0;
@@ -321,11 +304,9 @@ button {
 }
 
 .hit-shape {
-  /*left: -80%;*/
   position: absolute;
   align-self: center;
   bottom: 50%;
-  /*display: table-cell;*/
   z-index: 11;
   animation-name: hitting;
   animation-duration: 1000ms;
