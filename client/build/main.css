@@ -63,17 +63,17 @@
   height: 70%;
   width: 100%;
   display: flex;
-  flex: auto;
+  /*flex: auto;*/
 }
 
 /*****************OTHER PLAYERS PANEL*****************/
 
 #other-players {
   height: 100%;
-  width: 30%;
   border: 1px solid #888;
   overflow: hidden;
-  flex: auto;
+  flex: 1;
+  align-self: flex-end;
 }
 
 .other-player-wrapper {
@@ -89,18 +89,19 @@
 
 #magic-wrapper {
   height: inherit;
-  width: inherit;
-  position: absolute;
+  /*width: inherit;*/
+  /*position: absolute;*/
   min-width: 500px;
   min-height: 500px;
-  flex: auto;
+  flex: 3;
+  align-self: flex-start;
 }
 
 #magic-layer {
   height: 100%;
-  width: 70%;
-  /*min-width: 500px;
-  min-height: 500px;*/
+  /*width: 70%;*/
+  min-width: 500px;
+  min-height: 500px;
   /*flex: auto;*/
 }
 
@@ -229,24 +230,33 @@ button {
   }
 }
 
-#hit-bar {
+/*#hit-bar {
+  position: relative;
+  left: -35%;
   width: 1000px;
   height: 1px;
   padding: -2px;
   background-color: red;
   border-color: purple;
   border-style: solid;
-}
+}*/
 
-#hit-triangle {
+/*#hit-triangle {
+  position: absolute;
+  align-self: center;
+
   width: 0;
   height: 0;
   border-left: 50px solid transparent;
   border-right: 50px solid transparent;
   border-top: 100px solid purple;
-}
+}*/
 
-.hit-shape {
+/*.hit-shape {
+  left: -80%;
+  position: relative;
+  display: table-cell;
+  align-self: center;
   z-index: 11;
   animation-name: hitting;
   animation-duration: 1000ms;
@@ -256,7 +266,7 @@ button {
   animation-direction: normal;
   animation-iteration-count: 1;
   animation-play-state: running;
-}
+}*/
 
 
 @keyframes hitting {

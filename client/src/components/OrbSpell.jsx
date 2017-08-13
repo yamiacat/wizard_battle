@@ -19,9 +19,9 @@ export const OrbSpell = (props) => {
       <div id="orb-spell">
       <div id="charging-circle"
         style={props.chargeAnimation}>
-            {hitShape}
         </div>
       </div>
+      {hitShape}
     </div>
   )
 }
