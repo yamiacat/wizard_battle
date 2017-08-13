@@ -185,11 +185,22 @@ button {
 
 /******************ANIMATIONS***********************/
 
-#orb-wrapper {
+#spell-wrapper {
   position: absolute;
   left: 30%;
   align-self: center;
+}
 
+#orb-wrapper {
+  /*position: absolute;*/
+  left: 30%;
+  /*align-self: center;*/
+}
+
+#hit-wrapper {
+  /*position: absolute;*/
+  left: 30%;
+  /*align-self: center;*/
 }
 
 #orb-spell {
@@ -285,10 +296,10 @@ button {
     opacity: 0;
   }
 }
-/*
+
 #hit-bar {
-  position: relative;
-  left: -35%;
+  /*position: absolute;*/
+  left: -500px;
   width: 1000px;
   height: 1px;
   padding: -2px;
@@ -298,9 +309,10 @@ button {
 }
 
 #hit-triangle {
-  position: relative;
-  align-self: center;
-
+  /*position: relative;*/
+  /*display: table-cell;
+  align-self: center;*/
+  left: 25px;
   width: 0;
   height: 0;
   border-left: 50px solid transparent;
@@ -309,10 +321,11 @@ button {
 }
 
 .hit-shape {
-  left: -80%;
-  position: relative;
-  display: table-cell;
+  /*left: -80%;*/
+  position: absolute;
   align-self: center;
+  bottom: 50%;
+  /*display: table-cell;*/
   z-index: 11;
   animation-name: hitting;
   animation-duration: 1000ms;
@@ -333,4 +346,4 @@ button {
   0%, 100% {
     opacity: 0;
   }
-}*/
+}

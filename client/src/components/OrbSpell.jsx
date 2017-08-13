@@ -6,8 +6,8 @@ export const OrbSpell = (props) => {
 
   if(props.hitSomething == true) {
     let damageStyle = {
-      borderWidth: props.damageCaused,
-      top: (60 + props.damageCaused)*-1
+      borderWidth: props.damageCaused
+      // top: (60 + props.damageCaused)*-1
       };
     hitShape = <div className="hit-shape" id="hit-triangle">
       <div id="hit-bar" className="hit-shape" style={damageStyle}></div>
@@ -15,13 +15,17 @@ export const OrbSpell = (props) => {
   }
 
   return(
-    <div id="orb-wrapper">
-      <div id="orb-spell">
-      <div id="charging-circle"
-        style={props.chargeAnimation}>
+    <div id="spell-wrapper">
+      <div id="orb-wrapper">
+        <div id="orb-spell">
+        <div id="charging-circle"
+          style={props.chargeAnimation}>
+          </div>
         </div>
       </div>
-      {hitShape}
+      <div id="hit-wrapper">
+        {hitShape}
+      </div>
     </div>
   )
 }
