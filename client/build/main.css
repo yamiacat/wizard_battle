@@ -1,11 +1,8 @@
 #game-container {
   width: 100%;
-  /*height: 100%;*/
+  height: 100%;
   position: absolute;
   margin: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
 }
 
 #game-container h1 {
@@ -14,18 +11,20 @@
 }
 
 #status-layer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
   width: inherit;
-  height: inherit;
+  height: 100%;
 }
 
 /******************GAME STATUS*******************/
 
 #game-status {
-  display: flex;
+  display: inline-flex;
   flex-direction: row;
   justify-content: space-between;
-  flex: auto;
-  /*flex-wrap: wrap;*/
+  flex: 1;
 }
 
 #game-status h2 {
@@ -36,18 +35,19 @@
   width: 50%;
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
+  justify-content: space-between;
   flex: 1;
 }
 
 #health-bar {
     width: 90%;
     background-color: lightgrey;
-    height: 30px;
+    min-height: 30px;
 }
+
 #health-indicator {
     width: 100%;
-    height: 30px;
+    min-height: 30px;
 }
 
 #game-messages {
@@ -60,21 +60,17 @@
 /*****************GAME BLOCK*****************/
 
 #game-block {
-  /*height: 100%;*/
-  width: 100%;
+  flex: 5;
   display: flex;
-  /*box-sizing: border-box;*/
-  /*flex: auto;*/
+  box-sizing: border-box;
 }
 
 /*****************OTHER PLAYERS PANEL*****************/
 
 #other-players {
-  /*height: 100%;*/
   border: 1px solid #888;
   overflow: hidden;
   flex: 1;
-  /*align-self: flex-end;*/
 }
 
 .other-player-wrapper {
@@ -84,37 +80,33 @@
 .other-player-bar {
   margin-top: -10px;
   margin-bottom: -10px;
+  margin-right: 10px;
 }
 
 
 
 #magic-wrapper {
-  height: inherit;
+  /*height: inherit;*/
   /*width: inherit;*/
-  /*position: absolute;*/
+  position: relative;
+  top: 0;
+  left: 0;
   min-width: 500px;
   min-height: 500px;
   flex: 3;
-  /*align-self: flex-start;*/
 }
 
 #magic-layer {
   height: 100%;
-  /*width: 70%;*/
   min-width: 500px;
   min-height: 500px;
-  /*flex: auto;*/
 }
-
-
-
-
 
 
 #player-icon {
   position: absolute;
   width: 50px;
-  height: 75px;
+  max-height: 75px;
   left: -25px;
   top: -75px;
 }
@@ -138,15 +130,10 @@
 }
 
 #spell-buttons {
-  align-self: flex-end;
-  flex: auto;
-  /*position: absolute;*/
-  /*height: auto;
-  width: 100%;*/
-  display: flex;
+  flex: 1;
+  display: inline-flex;
   flex-direction: row;
   justify-content: space-around;
-  /*top: 600px;*/
 }
 
 button {
@@ -269,6 +256,8 @@ button {
   height: 100%;
   width: 100%;
   position: absolute;
+  display: table-cell;
+  align-self: center;
   pointer-events: none;
   box-sizing: border-box;
   /*display: table-cell;*/
@@ -296,7 +285,7 @@ button {
     opacity: 0;
   }
 }
-
+/*
 #hit-bar {
   position: relative;
   left: -35%;
@@ -344,4 +333,4 @@ button {
   0%, 100% {
     opacity: 0;
   }
-}
+}*/
