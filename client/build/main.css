@@ -21,9 +21,6 @@
 /******************GAME STATUS*******************/
 
 #game-status {
-  /*position: fixed;*/
-  /*width: 100%;
-  height: 20%;*/
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -54,15 +51,10 @@
 }
 
 #game-messages {
-  /*position: absolute;*/
-  /*align-self: flex-end;*/
   flex: 1;
   overflow: hidden;
-  /*left: 548px;
-  top: -50px;*/
   border: 1px solid #888;
-  /*width: 90%;*/
-  /*height: 115px;*/
+  max-height: 7em;
 }
 
 /*****************GAME BLOCK*****************/
@@ -77,15 +69,11 @@
 /*****************OTHER PLAYERS PANEL*****************/
 
 #other-players {
-  /*position: absolute;*/
-  /*display: inline-block;*/
-  /*align-self: flex-end;*/
-  /*left: 1000px;
-  top: 70px;*/
   height: 100%;
   width: 30%;
   border: 1px solid #888;
   overflow: hidden;
+  flex: auto;
 }
 
 .other-player-wrapper {
@@ -99,15 +87,21 @@
 
 
 
-
-#magic-layer {
-  height: 100%;
-  width: 100%;
+#magic-wrapper {
+  height: inherit;
+  width: inherit;
+  position: absolute;
   min-width: 500px;
   min-height: 500px;
   flex: auto;
-  /*position: absolute;
-  top: 70px;*/
+}
+
+#magic-layer {
+  height: 100%;
+  width: 70%;
+  /*min-width: 500px;
+  min-height: 500px;*/
+  /*flex: auto;*/
 }
 
 
@@ -200,21 +194,20 @@ button {
 
 
 
-
-
-
-
-
-
-
 /******************ANIMATIONS***********************/
 
 #damage-frame {
+  z-index: 11;
+  height: 100%;
+  width: 100%;
   position: absolute;
+  pointer-events: none;
+  box-sizing: border-box;
+  /*display: table-cell;*/
+  /*align-self: center;*/
   border-style: solid;
   border-color: red;
-  /*bottom: -8px;
-  right: -263px;*/
+  border-width: 0;
   opacity: 0;
 
   animation-name: damaging;
@@ -243,9 +236,6 @@ button {
   background-color: red;
   border-color: purple;
   border-style: solid;
-  position: absolute;
-  /*top: -60px;
-  left: -496px;*/
 }
 
 #hit-triangle {
@@ -254,9 +244,6 @@ button {
   border-left: 50px solid transparent;
   border-right: 50px solid transparent;
   border-top: 100px solid purple;
-  position: absolute;
-  /*top: 190px;
-  left: 195px;*/
 }
 
 .hit-shape {
@@ -285,13 +272,9 @@ button {
 
 
 #charging-circle {
-  /*position: relative;*/
   width: 493px;
   height: 493px;
   margin: auto;
-  display: block;
-  /*left: -5px;
-  top: -7px;*/
   border-radius: 50%;
   border: 3px solid tomato;
   z-index: 10;

@@ -200,9 +200,9 @@ componentWillMount() {
     this.setState({
       damageAnimation: {animationPlayState: 'running',
       animationName: 'damaging',
-      borderWidth: damage,
-      width: 1002 - (damage * 2),
-      height: 502 - (damage * 2)
+      borderWidth: damage
+      // width: 1002 - (damage * 2),
+      // height: 502 - (damage * 2)
     }
     })
 

@@ -43,19 +43,20 @@ class MagicLayer extends React.Component {
 
     if(!this.props.scryStatus) {
       var mainPanel =
-      <GoogleMapReact
-        bootstrapURLKeys={{
-          key: apiKey
-        }}
-        defaultCenter={center}
-        defaultZoom={zoom}
-        onChange={this.props.onMapChange}
-        options={this.createMapOptions}
-        onClick={this.props.onMapClick}
-        playerLat={this.props.playerLat}
-        >
-          {playerIcon}
-        </GoogleMapReact>
+
+        <GoogleMapReact
+          bootstrapURLKeys={{
+            key: apiKey
+          }}
+          defaultCenter={center}
+          defaultZoom={zoom}
+          onChange={this.props.onMapChange}
+          options={this.createMapOptions}
+          onClick={this.props.onMapClick}
+          playerLat={this.props.playerLat}
+          >
+            {playerIcon}
+          </GoogleMapReact>
     } else {
       var mainPanel = <ScryPanorama
         scryedLat={this.props.scryedLat}
@@ -64,8 +65,15 @@ class MagicLayer extends React.Component {
     }
 
     return(
-      <div id="magic-layer" onKeyUp={this.props.keyListen}>
-            {mainPanel}
+      <div id="magic-wrapper">
+        <div id="damage-frame"
+          style={this.props.damageAnimation}>
+        </div>
+        <div id="magic-layer"
+          onKeyUp={this.props.keyListen}
+          >
+              {mainPanel}
+        </div>
       </div>
     )
   }

@@ -36,7 +36,6 @@ class StatusLayer extends React.Component {
     } else if (this.props.player && this.props.playerLat && !this.props.scryStatus) {
       activeComponent = <OrbSpell
         chargeAnimation={this.props.chargeAnimation}
-        damageAnimation={this.props.damageAnimation}
         hitSomething={this.props.hitSomething}
         damageCaused={this.props.damageCaused}
       />;
@@ -104,6 +103,7 @@ class StatusLayer extends React.Component {
             scryedLng={this.props.scryedLng}
             health={this.props.health}
             keyListen={this.props.keyListen}
+            damageAnimation={this.props.damageAnimation}
             />
             <OtherPlayers
               otherPlayers={this.props.otherPlayers}
