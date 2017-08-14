@@ -53,13 +53,15 @@ class StatusLayer extends React.Component {
     } else if(this.props.health < 333 && this.props.health > 0) {
       healthLevel = {backgroundColor: 'red',
         width: healthPercentage}
-    } else if(this.props.health <= 0) {
+    } else if(this.props.health <= 0 && !this.props.playerLat) {
+      spellButton =  <div id="spell-buttons">
+      </div>
+    } else if(this.props.health <= 0 && this.props.playerLat) {
       healthLevel = {backgroundColor: 'red',
         width: healthPercentage}
       spellButton =  <div id="spell-buttons">
         <h1>YOU DED</h1>
-      </div>
-    } else {
+      </div>} else {
       healthLevel = {backgroundColor: 'darkorange',
         width: healthPercentage}
     }
