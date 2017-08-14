@@ -249,23 +249,37 @@ componentWillMount() {
 
       let currentOtherPlayers = this.state.otherPlayers;
 
-      currentOtherPlayers[hitPlayerNow] = broadcastDetails.hitPlayerHealth;
+
 
       if(broadcastDetails.fatality == true && broadcastDetails.attackingPlayer == this.state.player) {
         this.addAttackMessage(`You killed ${hitPlayerNow}!`);
-        console.log("before delete", currentOtherPlayers);
-        delete currentOtherPlayers[hitPlayerNow];
+
+        currentOtherPlayers[hitPlayerNow] = "VAPORIZED!";
         this.setState({otherPlayers: currentOtherPlayers});
-        console.log("after delete", currentOtherPlayers);
+
+        window.setTimeout(() => {
+          delete currentOtherPlayers[hitPlayerNow];
+          this.setState({otherPlayers: currentOtherPlayers})
+        }, 1000);
+
 
       } else if (broadcastDetails.fatality == true && broadcastDetails.attackingPlayer != this.state.player) {
-        delete currentOtherPlayers.hitPlayerNow;
+        currentOtherPlayers[hitPlayerNow] = "VAPORIZED!";
 
         this.setState({gameMessage:
           `${broadcastDetails.attackingPlayer} killed ${hitPlayerNow}!`,
           otherPlayers: currentOtherPlayers
         });
+
+        window.setTimeout(() => {
+          delete currentOtherPlayers[hitPlayerNow];
+          this.setState({otherPlayers: currentOtherPlayers})
+        }, 1000);
+
       } else if (broadcastDetails.attackingPlayer == this.state.player && broadcastDetails.damage) {
+
+        currentOtherPlayers[hitPlayerNow] = broadcastDetails.hitPlayerHealth;
+
         this.addAttackMessage(`You hexed ${hitPlayerNow} for ${broadcastDetails.damage} damage!`);
 
         this.setState({
@@ -277,6 +291,10 @@ componentWillMount() {
           {hitSomething: false,
           damageCaused: 0})
         }, 1000);
+      } else {
+        this.setState({
+            otherPlayers: currentOtherPlayers
+        })
       }
     }
   }
@@ -371,6 +389,12 @@ componentWillMount() {
         playerLng: data.location.latLng.lng(),
         health: 1000
       })
+
+      let broadcastDetails = {
+        hitPlayer: this.state.player,
+        hitPlayerHealth: 1000
+      }
+      this.socket.emit('broadcast', broadcastDetails);
     }
   }
 

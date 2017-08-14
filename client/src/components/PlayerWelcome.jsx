@@ -21,7 +21,7 @@ class PlayerWelcome extends React.Component {
         <input type="submit" value="Submit"></input>
       </form>
     } else {
-      playerChoice = <h4 className="player-input">Click on the map to choose your start position</h4>
+      playerChoice = <h4 className="player-input">Click on (almost) any bit of land, anywhere in the world, to choose your start position!</h4>
     }
 
 
